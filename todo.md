@@ -1,0 +1,1 @@
+- [] figure out a way to make the container reusable over plugins (each plugin registers it's own service provider?).

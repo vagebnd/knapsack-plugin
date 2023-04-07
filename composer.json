@@ -1,0 +1,31 @@
+{
+    "name": "knapsack/knapsack",
+    "description": "Knapsack WordPress starter theme",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gianluca Riggio",
+            "email": "luca@maximumawesome.nl"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "knapsack/framework": "^0.0.4"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "szepeviktor/phpstan-wordpress": "^1.1",
+        "filp/whoops": "^2.15",
+        "symfony/var-dumper": "^5.4",
+        "friendsofphp/php-cs-fixer": "^3.16"
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse --memory-limit=2G",
+        "fix": "vendor/bin/pint"
+    }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "knapsack",
+  "version": "0.0.1",
+  "author": "Gianluca Riggio <luca@maximumawesome.nl>",
+  "scripts": {
+    "dev": "export APP_ENV=development && vite",
+    "build": "export APP_ENV=production && vite build"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "autoprefixer": "^10.4.14",
+    "fast-glob": "^3.2.12",
+    "husky": "4",
+    "lint-staged": "^10.5.4",
+    "micromatch": "^4.0.5",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.7",
+    "tailwindcss": "^3.3.1",
+    "vite": "^4.0.4"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "semi": false,
+    "arrowParens": "always",
+    "quoteProps": "consistent",
+    "bracketSpacing": true,
+    "overrides": [
+      {
+        "files": "resources/**/*.html",
+        "options": {
+          "tabWidth": 4
+        }
+      }
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {}
+}

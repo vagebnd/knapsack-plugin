@@ -3,6 +3,7 @@
 use Knapsack\Compass\Core\Http\Kernel;
 use Knapsack\Compass\Plugin;
 use Knapsack\Compass\Support\PlatformCheck;
+use Skeleton\Support\Plugin as PluginApp;
 
 if (! defined('ABSPATH')) {
     exit; // Disable direct access.
@@ -24,10 +25,7 @@ require __DIR__.'/../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
-| Create plugin instance
-|
-| This container will be returned and interact with it directly, this is
-| required so we can repeat this process for each plugin.
+| Create App instance
 |--------------------------------------------------------------------------
 */
 new Kernel(
@@ -36,9 +34,15 @@ new Kernel(
 
 /*
 |--------------------------------------------------------------------------
+| Bind the app instance to the plugin
+|--------------------------------------------------------------------------
+*/
+PluginApp::getInstance()
+    ->setContainer($app);
+
+/*
+|--------------------------------------------------------------------------
 | Load the plugins default settings
 |--------------------------------------------------------------------------
 */
 require_once __DIR__.'/plugin/settings.php';
-
-return $app;

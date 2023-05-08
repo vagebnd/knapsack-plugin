@@ -1,10 +1,10 @@
 {
-    "name": "knapsack/knapsack",
+    "name": "knapsack/plugin",
     "description": "Knapsack WordPress starter theme",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "Skeleton\\": "src/"
         }
     },
     "authors": [

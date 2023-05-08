@@ -16,7 +16,4 @@ Domain Path: /lang
 | Bootstrap the plugin
 |--------------------------------------------------------------------------
 */
-$app = require_once __DIR__.'/bootstrap/app.php';
-
-// We now interact with the app instance directly.
-// This allows us to repeat this process for each plugin.
+require_once __DIR__.'/bootstrap/app.php';

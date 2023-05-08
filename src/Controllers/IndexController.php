@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace Skeleton\Controllers;
 
 use Knapsack\Compass\Routing\Controller;
 

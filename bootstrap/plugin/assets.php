@@ -1,15 +1,13 @@
 <?php
 
-use Knapsack\Compass\Support\Vite;
+use function Skeleton\Support\vite;
 
 /*
 |--------------------------------------------------------------------------
-| Ensure the default theme assets are loaded
+| Ensure the default plugin assets are loaded
 |--------------------------------------------------------------------------
 */
-add_action('wp_enqueue_scripts', function () {
-    $vite = Vite::make();
 
-    // TODO: Get this from config.
-    $vite->asset('app.ts');
-}, 100);
+add_action('admin_enqueue_scripts', function () {
+    vite()->asset('admin.ts');
+});

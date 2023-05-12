@@ -64,3 +64,16 @@ if (! function_exists('vite')) {
         return new Vite('assets', Plugin::getInstance()->getContainer());
     }
 }
+
+if (! function_exists('redirect')) {
+    /**
+     * Redirect to a page in the admin panel.
+     *
+     * @param string $page
+     */
+    function redirect($page)
+    {
+        wp_redirect("admin.php?page={$page}");
+        exit;
+    }
+}

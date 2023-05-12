@@ -12,6 +12,13 @@ if (! function_exists('path')) {
     }
 }
 
+if (! function_exists('app_path')) {
+    function app_path($path = '')
+    {
+        return path('app/' . $path);
+    }
+}
+
 if (! function_exists('url')) {
     function url($path = '')
     {

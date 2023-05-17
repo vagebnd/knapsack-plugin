@@ -11,3 +11,4 @@ What does this plugin need to do?
 
 - Enqueue scripts and styles
 - Register shortcodes
+- <3

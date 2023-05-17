@@ -8,3 +8,6 @@ parameters:
         - bootstrap/
         - config/
         - routes/
+    ignoreErrors:
+        - '#Constant ELEMENTOR_VERSION not found.#'
+        - '#Instantiated class Skeleton\\Elementor\\.* not found.#'

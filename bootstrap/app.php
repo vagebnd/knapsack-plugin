@@ -45,4 +45,4 @@ PluginApp::getInstance()
 | Load the plugins default settings
 |--------------------------------------------------------------------------
 */
-require_once __DIR__.'/plugin/settings.php';
+require_once __DIR__.'/plugin.php';

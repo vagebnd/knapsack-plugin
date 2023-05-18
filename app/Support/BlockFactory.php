@@ -2,16 +2,17 @@
 
 namespace Skeleton\Support;
 
+use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 
-class Factory
+class BlockFactory
 {
     protected static string $baseNamespace = '\\Skeleton\\';
 
     public static function run(string $directory, string $name = '*')
     {
         $isLookingForSpecificIntegration = $name !== '*';
-        $baseClass = substr(basename($directory), 0, -1);
+        $baseClass = Str::singular(basename($directory));
 
         if (! file_exists(app_path($directory))) {
             return [];
@@ -65,9 +66,6 @@ class Factory
             throw new \Exception("Class {$fqcn} does not exist");
         }
 
-        return vsprintf('%s%s', [
-            $namespace,
-            $class,
-        ]);
+        return $fqcn;
     }
 }

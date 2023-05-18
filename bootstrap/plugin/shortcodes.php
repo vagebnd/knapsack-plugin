@@ -1,7 +1,7 @@
 <?php
 
-use Skeleton\Support\Factory;
+use Skeleton\Support\BlockFactory;
 
 add_action('plugins_loaded', function () {
-    Factory::run('Blocks/Shortcodes');
+    BlockFactory::run('Blocks/Shortcodes');
 });

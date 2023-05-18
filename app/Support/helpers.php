@@ -8,7 +8,7 @@ use Knapsack\Compass\Support\Vite;
 if (! function_exists('path')) {
     function path($path = '')
     {
-        return __DIR__ . '/../../' . $path;
+        return realpath(__DIR__ . '/../../' . $path);
     }
 }
 

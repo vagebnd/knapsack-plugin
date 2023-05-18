@@ -2,9 +2,10 @@
 
 namespace Skeleton\Blocks\Shortcodes;
 
+use Illuminate\Support\Arr;
 use ReflectionObject;
 use Skeleton\Blocks\Contracts\IntegrationContract;
-use Skeleton\Support\Factory;
+use Skeleton\Support\BlockFactory;
 
 abstract class Shortcode
 {
@@ -25,7 +26,7 @@ abstract class Shortcode
             throw new \Exception('Signature is not set');
         }
 
-        $this->integrationInstances = Factory::run('Blocks/Integrations', (new ReflectionObject($this))->getShortName());
+        $this->integrationInstances = BlockFactory::run('Blocks/Integrations', (new ReflectionObject($this))->getShortName());
 
         foreach ($this->integrationInstances as $instance) {
             if (! $instance instanceof IntegrationContract) {
@@ -40,9 +41,7 @@ abstract class Shortcode
 
     private function beforeRender($attrs, $content = null)
     {
-        if (! is_array($attrs)) {
-            $attrs = [$attrs];
-        }
+        $attrs = Arr::wrap($attrs);
 
         foreach ($this->integrationInstances as $integration) {
             if ($integration->shouldRun($attrs)) {

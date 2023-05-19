@@ -6,12 +6,17 @@ use Illuminate\Support\Arr;
 use ReflectionObject;
 use Skeleton\Blocks\Contracts\IntegrationContract;
 use Skeleton\Support\BlockFactory;
+use function Skeleton\Support\vite;
 
 abstract class Shortcode
 {
     public static $signature;
 
     public array $integrations = [];
+
+    public array $scripts = [];
+
+    public array $styles = [];
 
     /**
      * @var IntegrationContract[]
@@ -34,6 +39,12 @@ abstract class Shortcode
             }
         }
 
+        $this->enqueueScripts();
+        $this->register();
+    }
+
+    private function register()
+    {
         add_shortcode($this::$signature, function () {
             return $this->beforeRender(...func_get_args());
         });
@@ -50,5 +61,14 @@ abstract class Shortcode
         }
 
         return $this->render($attrs, $content);
+    }
+
+    protected function enqueueScripts()
+    {
+        foreach ($this->scripts as $script) {
+            add_action('wp_enqueue_scripts', function () use ($script) {
+                vite()->asset('shortcodes/' . $script);
+            });
+        }
     }
 }

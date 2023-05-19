@@ -3,12 +3,13 @@
 namespace Skeleton\Blocks\Integrations\Elementor;
 
 use Skeleton\Blocks\Contracts\IntegrationContract;
+use function Skeleton\Support\path;
 
 if (! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-abstract class Elementor implements IntegrationContract
+class Elementor implements IntegrationContract
 {
     /**
      * Addon Version
@@ -38,18 +39,11 @@ abstract class Elementor implements IntegrationContract
     {
         if ($this->isCompatible()) {
             add_action('elementor/init', function () {
-                add_action('elementor/widgets/register', function ($manager) {
-                    $this->setup($manager);
-                });
-
-                // add_action('elementor/controls/register', function () {
-                //     dd('register controls');
-                // });
+                require_once path('elementor/Factory.php');
+                new \Skeleton\Elementor\Factory();
             });
         }
     }
-
-    abstract public function setup($manager);
 
     public function shouldRun($args): bool
     {

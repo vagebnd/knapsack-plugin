@@ -1,0 +1,73 @@
+<template>
+  <div class="imageManager">
+    <draggable v-model="imagesLocal" group="items" item-key="id" handle=".image-container" @end="emitUpdate">
+      <template #item="{ element }">
+        <div class="image-container">
+          <Image :id="element.id" :thumb="element.thumb" @delete="deleteImage(element.id)" />
+        </div>
+      </template>
+      <template #footer>
+        <button type="button" @click="mediaUploader.open">{{ $t('add image(s)') }}</button>
+      </template>
+    </draggable>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { ref, watch } from 'vue'
+import draggable from 'vuedraggable'
+import { $t } from '/@admin:plugins/i18n'
+import Image, { Image as ImageType } from '/@admin:components/ImageManager/Image.vue'
+
+const emit = defineEmits<{
+  (event: 'update', value: ImageType[]): void
+}>()
+
+const props = defineProps<{
+  images: ImageType[]
+}>()
+
+const imagesLocal = ref(props.images)
+
+const mediaUploader = (wp.media.frames.file_frame = wp.media({
+  title: $t('Choose Image'),
+  button: {
+    text: $t('Choose Image'),
+  },
+  multiple: true,
+}))
+
+const deleteImage = (id: number) => {
+  imagesLocal.value = imagesLocal.value.filter((image) => image.id !== id)
+  emitUpdate()
+}
+
+const selectImages = () => {
+  const selection = mediaUploader?.state()?.get('selection')?.toJSON() || []
+
+  if (selection.length === 0) {
+    return
+  }
+
+  selection.forEach((image: any) => {
+    imagesLocal.value.push({
+      id: image.id,
+      thumb: image.sizes.thumbnail.url,
+    })
+  })
+
+  emitUpdate()
+}
+
+const emitUpdate = () => {
+  emit('update', imagesLocal.value)
+}
+
+watch(
+  () => props.images,
+  (images) => (imagesLocal.value = images),
+  { immediate: true },
+)
+
+mediaUploader.on('select', selectImages)
+</script>

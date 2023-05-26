@@ -84,3 +84,17 @@ if (! function_exists('redirect')) {
         exit;
     }
 }
+
+if (! function_exists('wp_log')) {
+    /**
+     * Redirect to a page in the admin panel.
+     *
+     */
+    function wp_log($value)
+    {
+        $file_path = path('wp.log');
+        $file_handle = fopen($file_path, 'a');
+        fwrite($file_handle, $value . PHP_EOL);
+        fclose($file_handle);
+    }
+}

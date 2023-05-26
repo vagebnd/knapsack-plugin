@@ -3,11 +3,14 @@
   "version": "0.0.1",
   "author": "Gianluca Riggio <luca@maximumawesome.nl>",
   "scripts": {
-    "dev": "export APP_ENV=development && vite",
-    "build": "export APP_ENV=production && vite build"
+    "watch": "export APP_ENV=development && vite",
+    "build": "export APP_ENV=production && vite build",
+    "admin:watch": "export APP_ENV=development && vite --config vite.config.admin.ts",
+    "admin:build": "export APP_ENV=production && vite build --config vite.config.admin.ts"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
+    "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.14",
     "fast-glob": "^3.2.12",
     "husky": "4",
@@ -41,5 +44,14 @@
       "pre-commit": "lint-staged"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "@sipec/vue3-tags-input": "^3.0.4",
+    "axios": "^1.4.0",
+    "collect.js": "^4.36.1",
+    "vue": "^3.3.4",
+    "vue-autocomplete-input-tag": "^2.0.1",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "^4.2.1",
+    "vuedraggable": "^4.1.0"
+  }
 }

@@ -1,26 +1,27 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["ESNext", "DOM.Iterable", "DOM"],
-    "types": ["vite/client"],
-    "checkJs": false,
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Node",
+    "strict": true,
+    "jsx": "preserve",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "sourceMap": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    "types": ["vite/client", "node"],
+    "skipLibCheck": true,
     "noEmit": true,
-    "jsx": "react",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "baseUrl": ".",
+    "paths": {
+      "/@admin/*": ["resources/admin/*"],
+      "/@admin:plugins/*": ["./resources/admin/assets/ts/plugins/*"],
+      "/@admin:components/*": ["./resources/admin/assets/ts/components/*"],
+      "/@admin:layouts/*": ["./resources/admin/assets/ts/layouts/*"],
+      "/@admin:utils/*": ["./resources/admin/assets/ts/utils/*"],
+      "/@admin:views/*": ["./resources/admin/assets/ts/views/*"]
+    }
   },
-  "include": ["./resources/assets/ts"],
-  "exclude": ["node_modules"]
+  "include": ["resources/**/*.ts", "resources/**/*.d.ts", "resources/**/*.tsx", "resources/**/*.vue"]
 }

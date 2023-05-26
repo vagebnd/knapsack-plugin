@@ -1,12 +1,11 @@
 <?php
 
 use Knapsack\Compass\Support\Facades\Route;
-use Skeleton\Controllers\AdminPages\PluginPageController;
-use function Skeleton\Support\asset_url;
+use Skeleton\Http\Controllers\AdminPages\PriceListController;
+use function Skeleton\Support\resource_url;
 
-Route::adminPage('/galleries', function ($page) {
-    $page->get('/', [PluginPageController::class, 'index']);
-    $page->post('/', [PluginPageController::class, 'store']);
+Route::adminPage('/pricelist', function ($page) {
+    $page->get('/', [PriceListController::class, 'index']);
 }, [
-    'icon' => asset_url('img/icon.svg'),
+    'icon' => resource_url('admin/assets/img/icon.svg'),
 ]);

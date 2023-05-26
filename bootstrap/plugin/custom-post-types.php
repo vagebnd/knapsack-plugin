@@ -5,12 +5,13 @@ use Symfony\Component\Finder\Finder;
 
 add_action('init', function () {
     $finder = Finder::create()
-        ->in(app_path('CustomPostTypes'))
+        ->in(app_path('Models'))
         ->files();
 
     foreach ($finder as $file) {
-        $ClassName = 'Skeleton\\CustomPostTypes\\' . $file->getBasename('.php');
+        $name = $file->getBasename('.php');
+        $ClassName = 'Skeleton\\Models\\' . $name;
         $instance = new $ClassName();
-        register_post_type($instance->name, $instance->args());
+        register_post_type($name, $instance->args());
     }
 });

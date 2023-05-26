@@ -16,9 +16,16 @@
             "email": "luca@maximumawesome.nl"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../framework"
+        }
+    ],
     "require": {
         "php": "^7.4|^8.0",
-        "knapsack/framework": "^0.0.5"
+        "knapsack/framework": "dev-main",
+        "rakit/validation": "^1.4"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",

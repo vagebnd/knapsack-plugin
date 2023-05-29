@@ -1,5 +1,5 @@
 <template>
-  <div class="pricelist">
+  <div class="pricelist tailwind">
     <router-view></router-view>
   </div>
 </template>

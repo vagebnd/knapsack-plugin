@@ -1,4 +1,6 @@
-import mountVue from '/@admin:utils/vue'
+import '/@css/tailwind.css'
+
+import mountVue from '../bootstrap/vue'
 import Pricelist from './pricelist/Pricelist.vue'
 import Index from './pricelist/Index.vue'
 import Update from './pricelist/Update.vue'

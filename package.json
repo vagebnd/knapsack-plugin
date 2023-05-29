@@ -9,6 +9,7 @@
     "admin:build": "export APP_ENV=production && vite build --config vite.config.admin.ts"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "@types/node": "^18.11.18",
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.14",
@@ -18,7 +19,7 @@
     "micromatch": "^4.0.5",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
-    "tailwindcss": "^3.3.1",
+    "tailwindcss": "^3.3.2",
     "vite": "^4.0.4"
   },
   "prettier": {

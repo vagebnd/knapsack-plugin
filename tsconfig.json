@@ -16,9 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "/@admin/*": ["resources/admin/*"],
-      "/@admin:plugins/*": ["./resources/admin/assets/ts/plugins/*"],
       "/@admin:components/*": ["./resources/admin/assets/ts/components/*"],
+      "/@admin:css/*": ["./resources/admin/assets/css/*"],
       "/@admin:layouts/*": ["./resources/admin/assets/ts/layouts/*"],
+      "/@admin:plugins/*": ["./resources/admin/assets/ts/plugins/*"],
       "/@admin:utils/*": ["./resources/admin/assets/ts/utils/*"],
       "/@admin:views/*": ["./resources/admin/assets/ts/views/*"]
     }

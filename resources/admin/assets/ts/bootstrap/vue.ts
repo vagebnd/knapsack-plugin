@@ -1,6 +1,7 @@
 import { VueElement, createApp } from 'vue'
 import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
-import { empty } from './object'
+import { empty } from '/@admin:utils/object'
+import { registerComponents } from './components'
 
 export default function mountVue(rootApp: VueElement, routes: RouteRecordRaw[] = []) {
   const app = createApp(rootApp)
@@ -10,6 +11,7 @@ export default function mountVue(rootApp: VueElement, routes: RouteRecordRaw[] =
   }
 
   app.mount('#vue')
+  registerComponents(app)
 
   return app
 }

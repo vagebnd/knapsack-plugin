@@ -1,16 +1,20 @@
 <template>
-  <div class="imageManager">
-    <draggable v-model="imagesLocal" group="items" item-key="id" handle=".image-container" @end="emitUpdate">
-      <template #item="{ element }">
-        <div class="image-container">
-          <Image :id="element.id" :thumb="element.thumb" @delete="deleteImage(element.id)" />
-        </div>
-      </template>
-      <template #footer>
-        <button type="button" @click="mediaUploader.open">{{ $t('add image(s)') }}</button>
-      </template>
-    </draggable>
-  </div>
+  <draggable v-model="imagesLocal" group="items" item-key="id" handle=".image-container" @end="emitUpdate" class="flex">
+    <template #item="{ element }">
+      <div class="image-container mr-4">
+        <Image :id="element.id" :thumb="element.thumb" @delete="deleteImage(element.id)" />
+      </div>
+    </template>
+    <template #footer>
+      <button
+        type="button"
+        @click="mediaUploader.open"
+        class="ring-1 ring-gray-300 rounded-md border-0 flex w-36 h-36 font-medium leading-6 items-center justify-center"
+      >
+        <Icon name="plus" class="text-gray-400 w-8" />
+      </button>
+    </template>
+  </draggable>
 </template>
 
 <script lang="ts" setup>

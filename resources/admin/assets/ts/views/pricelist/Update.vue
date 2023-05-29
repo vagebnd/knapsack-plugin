@@ -1,27 +1,44 @@
 <template>
   <AdminLayout>
     <template #title>
-      <h1>{{ $t('update') }}</h1>
+      <router-link :to="{ name: 'index' }" class="flex px-3 py-2 mr-3 rounded bg-sky-600 hover:bg-sky-500 items-center">
+        <Icon name="chevron-left" class="mr-1" />
+        {{ $t('back') }}
+      </router-link>
+      <InputElement
+        v-model="priceList.title"
+        @update="save"
+        class="w-64 text-white bg-gray-700 ring-0 focus:ring-0 focus:bg-gray-600"
+      />
     </template>
     <template #actions>
-      <router-link :to="{ name: 'index' }">{{ $t('back to menus') }}</router-link>
-      <button @click="deleteMenu" v-if="!isCreating">{{ $t('delete') }}</button>
+      <div class="flex">
+        <form @submit.prevent="addSection">
+          <div class="flex justify-center flex-row">
+            <InputElement
+              v-model="newSectionTitle"
+              class="w-64 text-white bg-gray-700 ring-0 focus:ring-0 focus:bg-gray-600"
+              :placeholder="$t('add a section')"
+            />
+            <ButtonElement type="submit" class="py-3">{{ $t('add section') }}</ButtonElement>
+          </div>
+        </form>
+        <ButtonElement @click="deleteMenu" v-if="!isCreating" class="py-3 bg-red-500 inline">
+          {{ $t('delete') }}
+        </ButtonElement>
+      </div>
     </template>
     <template #body>
       <div class="list">
-        <div>
-          <label>{{ $t('pricelist name') }}</label>
-          <input type="text" v-model="priceList.title" @blur="save" />
-        </div>
         <draggable v-model="priceList.sections" group="people" item-key="id" handle=".handle" @end="save">
           <template #item="{ element }">
-            <Section v-model:title="element.title" v-model:items="element.items" :tags="tags" @save="save" />
-          </template>
-          <template #footer>
-            <form class="add-section" @submit.prevent="addSection">
-              <input v-model="newSectionTitle" />
-              <button type="submit">{{ $t('add section') }}</button>
-            </form>
+            <Section
+              v-model:title="element.title"
+              v-model:items="element.items"
+              :tags="tags"
+              @save="save"
+              class="mb-4 last:mb-0"
+            />
           </template>
         </draggable>
       </div>

@@ -34,6 +34,7 @@ export default defineConfig({
       '/@admin:layouts': resolve(__dirname, './resources/admin/assets/ts/layouts'),
       '/@admin:utils': resolve(__dirname, './resources/admin/assets/ts/utils'),
       '/@admin:views': resolve(__dirname, './resources/admin/assets/ts/views'),
+      '/@admin:css': resolve(__dirname, './resources/admin/assets/css'),
     },
   },
 })

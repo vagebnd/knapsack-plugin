@@ -1,47 +1,42 @@
 <template>
-  <details class="bg-gray-100 rounded-md group max-w-3xl">
-    <summary
-      class="flex bg-gray-700 p-4 justify-between rounded-md group-open:rounded-bl-none group-open:rounded-br-none"
-    >
-      <h1 class="text-white">{{ title }}</h1>
-      <button class="handle w-3">
-        <Icon name="drag-handler" class="w-3 h-3 text-white" />
-      </button>
-    </summary>
-    <div class="body p-5">
-      <div class="grid grid-cols-2 gap-3 grid-flow-col mb-2">
-        <div class="mb-4">
-          <InputLabel>{{ $t('section name') }}</InputLabel>
-          <InputElement v-model="titleLocal" @update="emit('save')" />
-        </div>
-        <form class="mb-4" @submit.prevent="addItem">
-          <InputLabel>{{ $t('add an item') }}</InputLabel>
-          <div class="flex">
-            <InputElement v-model="newItemTitle" class="flex-1 cadskjhasdghjs" />
-            <ButtonElement type="submit">{{ $t('add item') }}</ButtonElement>
-          </div>
-        </form>
+  <Collapsable class="max-w-3xl">
+    <template #close>
+      <h1 class="text-sm font-semibold leading-6 text-gray-900">{{ title }}</h1>
+    </template>
+    <template #open>
+      <div class="flex justify-between items-center">
+        <InputElement v-model="titleLocal" @update="emit('save')" class="w-56 h-9" icon="pencil" />
       </div>
+    </template>
 
-      <div class="items">
-        <draggable v-model="itemsLocal" group="items" item-key="id" handle=".handle" @end="emit('save')">
-          <template #item="{ element }">
-            <div class="mb-4 last:mb-0">
-              <Item
-                v-model:title="element.title"
-                v-model:content="element.content"
-                v-model:price="element.price"
-                v-model:images="element.images"
-                v-model:tags="element.tags"
-                :tagOptions="tags"
-                @save="emit('save')"
-              />
-            </div>
-          </template>
-        </draggable>
+    <template #body>
+      <div class="body p-4 bg-white rounded-bl-md rounded-br-md">
+        <div class="items">
+          <draggable v-model="itemsLocal" group="items" item-key="id" handle=".handle" @end="emit('save')">
+            <template #item="{ element }">
+              <div class="mb-4 last:mb-0">
+                <Item
+                  v-model:title="element.title"
+                  v-model:content="element.content"
+                  v-model:price="element.price"
+                  v-model:images="element.images"
+                  v-model:tags="element.tags"
+                  :tagOptions="tags"
+                  @save="emit('save')"
+                />
+              </div>
+            </template>
+            <template #footer>
+              <form class="flex" @submit.prevent="addItem">
+                <InputElement v-model="newItemTitle" class="flex-1" :placeholder="$t('Enter new item name')" />
+                <ButtonElement type="submit">{{ $t('add item') }}</ButtonElement>
+              </form>
+            </template>
+          </draggable>
+        </div>
       </div>
-    </div>
-  </details>
+    </template>
+  </Collapsable>
 </template>
 
 <script lang="ts" setup>
@@ -51,6 +46,7 @@ import draggable from 'vuedraggable'
 import { $t } from '/@admin:plugins/i18n'
 import Item, { PricelistItem } from './Item.vue'
 import Icon from '/@admin:components/Icon.vue'
+import Collapsable from '../../../components/Collapsable.vue'
 
 export type PricelistSection = {
   id: number

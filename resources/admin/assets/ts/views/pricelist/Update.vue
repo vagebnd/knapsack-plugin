@@ -1,36 +1,27 @@
 <template>
+  <router-link :to="{ name: 'index' }" class="flex mt-4 pr-5 mr-3 rounded items-center">
+    <Icon name="chevron-right" class="mr-1" />
+    {{ $t('back') }}
+  </router-link>
   <AdminLayout>
     <template #title>
-      <router-link :to="{ name: 'index' }" class="flex px-3 py-2 mr-3 rounded bg-sky-600 hover:bg-sky-500 items-center">
-        <Icon name="chevron-left" class="mr-1" />
-        {{ $t('back') }}
-      </router-link>
       <InputElement
         v-model="priceList.title"
         @update="save"
-        class="w-64 text-white bg-gray-700 ring-gray-700 focus:bg-gray-600 focus:ring-0"
+        class="w-64 h-9 text-white bg-gray-700 ring-gray-700 focus:bg-gray-700 focus:ring-0"
+        icon="pencil"
       />
     </template>
     <template #actions>
       <div class="flex">
-        <form @submit.prevent="addSection">
-          <div class="flex justify-center flex-row">
-            <InputElement
-              v-model="newSectionTitle"
-              class="w-64 text-white bg-gray-700 ring-gray-700 focus:ring-0 focus:bg-gray-600 wrap"
-              :placeholder="$t('add a section')"
-            />
-            <ButtonElement type="submit" class="py-3 whitespace-nowrap">{{ $t('add section') }}</ButtonElement>
-          </div>
-        </form>
-        <ButtonElement @click="deleteMenu" v-if="!isCreating" class="py-3 bg-red-500 inline">
+        <ButtonIcon icon="bin" @click="deleteMenu" v-if="!isCreating" class="bg-red-500 inline">
           {{ $t('delete') }}
-        </ButtonElement>
+        </ButtonIcon>
       </div>
     </template>
     <template #body>
       <div class="list">
-        <draggable v-model="priceList.sections" group="people" item-key="id" handle=".handle" @end="save">
+        <draggable v-model="priceList.sections" group="people" item-key="id" handle=".drag-handler" @end="save">
           <template #item="{ element }">
             <Section
               v-model:title="element.title"
@@ -39,6 +30,14 @@
               @save="save"
               class="mb-4 last:mb-0"
             />
+          </template>
+          <template #footer>
+            <form @submit.prevent="addSection">
+              <div class="flex justify-center flex-row">
+                <InputElement v-model="newSectionTitle" :placeholder="$t('Enter new section title')" />
+                <ButtonIcon icon="plus" type="submit" class="whitespace-nowrap">{{ $t('add section') }}</ButtonIcon>
+              </div>
+            </form>
           </template>
         </draggable>
       </div>

@@ -1,6 +1,8 @@
 <template>
   <div class="layout admin mt-5 mr-5">
-    <header class="flex items-center justify-between bg-gray-800 p-5 text-white rounded-tl-md rounded-tr-md">
+    <header
+      class="flex items-center justify-between bg-gray-800 p-4 text-white rounded-tl-lg rounded-tr-lg ring-1 ring-gray-800"
+    >
       <div class="title flex text-white">
         <slot name="title" />
       </div>
@@ -8,7 +10,7 @@
         <slot name="actions" />
       </div>
     </header>
-    <div class="body bg-white p-5 rounded-bl-md rounded-br-md">
+    <div class="body bg-gray-200 ring-1 ring-gray-300 p-4 rounded-bl-lg rounded-br-lg">
       <slot name="body" />
     </div>
   </div>

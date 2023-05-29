@@ -1,12 +1,10 @@
 <template>
   <details class="group/item bg-gray-100 rounded-md">
     <summary
-      class="flex bg-gray-600 p-4 justify-between rounded-md group-open/item:rounded-bl-none group-open/item:rounded-br-none"
+      class="flex bg-gray-200 p-4 justify-between rounded-md group-open/item:rounded-bl-none group-open/item:rounded-br-none"
     >
-      <h1 class="text-white">{{ title }}</h1>
-      <button class="handle w-3">
-        <Icon name="drag-handler" class="w-3 h-3 text-white" />
-      </button>
+      <h1 class="text-gray-900">{{ title }}</h1>
+      <button class="handle w-3"><Icon name="drag-handler" class="w-3 h-3" /></button>
     </summary>
     <div class="body p-5 bg-white">
       <div class="flex">

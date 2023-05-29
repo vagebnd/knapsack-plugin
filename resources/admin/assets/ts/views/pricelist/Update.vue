@@ -8,7 +8,7 @@
       <InputElement
         v-model="priceList.title"
         @update="save"
-        class="w-64 text-white bg-gray-700 ring-0 focus:ring-0 focus:bg-gray-600"
+        class="w-64 text-white bg-gray-700 ring-gray-700 focus:bg-gray-600 focus:ring-0"
       />
     </template>
     <template #actions>
@@ -17,10 +17,10 @@
           <div class="flex justify-center flex-row">
             <InputElement
               v-model="newSectionTitle"
-              class="w-64 text-white bg-gray-700 ring-0 focus:ring-0 focus:bg-gray-600"
+              class="w-64 text-white bg-gray-700 ring-gray-700 focus:ring-0 focus:bg-gray-600 wrap"
               :placeholder="$t('add a section')"
             />
-            <ButtonElement type="submit" class="py-3">{{ $t('add section') }}</ButtonElement>
+            <ButtonElement type="submit" class="py-3 whitespace-nowrap">{{ $t('add section') }}</ButtonElement>
           </div>
         </form>
         <ButtonElement @click="deleteMenu" v-if="!isCreating" class="py-3 bg-red-500 inline">

@@ -1,11 +1,25 @@
 <template>
-  <details class="group" @toggle="toggle">
+  <details @toggle="toggle">
     <summary
-      class="flex flex-row items-center justify-between bg-white rounded-md group-open:rounded-bl-none group-open:rounded-br-none group-open:border-bottom-1 border-b border-gray-200"
+      class="flex flex-row items-center justify-between bg-white rounded-md"
+      :class="[
+        {
+          'rounded-bl-none': isOpen,
+          'rounded-br-none': isOpen,
+          'border-b': isOpen,
+          'border-gray-200': isOpen,
+        },
+      ]"
     >
       <div class="flex items-center py-4 pl-4 group-open:flex-1 group-open:mr-3">
         <div class="mr-1 group-open:mr-3">
-          <Icon name="chevron-right" class="origin-center group-open:rotate-90" />
+          <Icon
+            name="chevron-right"
+            :class="{
+              'origin-center': isOpen,
+              'rotate-90': isOpen,
+            }"
+          />
         </div>
 
         <div v-if="isOpen" class="flex-1">
@@ -20,7 +34,7 @@
         <Icon name="drag-handler" class="w-3 h-3 text-gray-500" />
       </button>
     </summary>
-    <div>
+    <div class="body p-4 bg-white rounded-bl-md rounded-br-md">
       <slot name="body" />
     </div>
   </details>
@@ -32,7 +46,7 @@ import Icon from './Icon.vue'
 
 withDefaults(
   defineProps<{
-    isDraggable: boolean
+    isDraggable?: boolean
   }>(),
   {
     isDraggable: true,

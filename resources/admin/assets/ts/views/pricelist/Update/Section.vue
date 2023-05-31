@@ -1,18 +1,18 @@
 <template>
-  <Collapsable class="max-w-3xl">
+  <Collapsable>
     <template #close>
       <h1 class="text-sm font-semibold leading-6 text-gray-900">{{ title }}</h1>
     </template>
     <template #open>
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center ml-2">
         <InputElement v-model="titleLocal" @update="emit('save')" class="w-56 h-9" icon="pencil" />
       </div>
     </template>
 
     <template #body>
-      <div class="body p-4 bg-white rounded-bl-md rounded-br-md">
+      <div class="bg-white rounded-bl-md rounded-br-md">
         <div class="items">
-          <draggable v-model="itemsLocal" group="items" item-key="id" handle=".handle" @end="emit('save')">
+          <draggable v-model="itemsLocal" group="items" item-key="id" handle=".drag-handler" @end="emit('save')">
             <template #item="{ element }">
               <div class="mb-4 last:mb-0">
                 <Item
@@ -29,7 +29,9 @@
             <template #footer>
               <form class="flex" @submit.prevent="addItem">
                 <InputElement v-model="newItemTitle" class="flex-1" :placeholder="$t('Enter new item name')" />
-                <ButtonElement type="submit">{{ $t('add item') }}</ButtonElement>
+                <ButtonElement type="submit" :disabled="!isNewItemButtonEnabled" class="disabled:opacity-50">
+                  {{ $t('add item') }}
+                </ButtonElement>
               </form>
             </template>
           </draggable>
@@ -45,8 +47,6 @@ import { computed, ref, watch } from 'vue'
 import draggable from 'vuedraggable'
 import { $t } from '/@admin:plugins/i18n'
 import Item, { PricelistItem } from './Item.vue'
-import Icon from '/@admin:components/Icon.vue'
-import Collapsable from '../../../components/Collapsable.vue'
 
 export type PricelistSection = {
   id: number
@@ -64,6 +64,7 @@ const props = defineProps<{
 }>()
 
 const newItemTitle = ref('')
+const isNewItemButtonEnabled = computed(() => newItemTitle.value.length > 2)
 
 const titleLocal = computed({
   get: () => props.title,

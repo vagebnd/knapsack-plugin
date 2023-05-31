@@ -1,6 +1,6 @@
 <template>
   <router-link :to="{ name: 'index' }" class="flex mt-4 pr-5 mr-3 rounded items-center">
-    <Icon name="chevron-right" class="mr-1" />
+    <Icon name="chevron-left" class="mr-1" />
     {{ $t('back') }}
   </router-link>
   <AdminLayout>
@@ -20,23 +20,28 @@
       </div>
     </template>
     <template #body>
-      <div class="list">
+      <div class="list max-w-3xl">
         <draggable v-model="priceList.sections" group="people" item-key="id" handle=".drag-handler" @end="save">
           <template #item="{ element }">
-            <Section
-              v-model:title="element.title"
-              v-model:items="element.items"
-              :tags="tags"
-              @save="save"
-              class="mb-4 last:mb-0"
-            />
+            <div class="mb-2">
+              <Section v-model:title="element.title" v-model:items="element.items" :tags="tags" @save="save" />
+            </div>
           </template>
           <template #footer>
-            <form @submit.prevent="addSection">
-              <div class="flex justify-center flex-row">
-                <InputElement v-model="newSectionTitle" :placeholder="$t('Enter new section title')" />
-                <ButtonIcon icon="plus" type="submit" class="whitespace-nowrap">{{ $t('add section') }}</ButtonIcon>
-              </div>
+            <form @submit.prevent="addSection" class="flex mt-4">
+              <InputElement
+                v-model="newSectionTitle"
+                :placeholder="$t('Enter new section title')"
+                class="flex-1 bg-white"
+              />
+              <ButtonIcon
+                icon="plus"
+                type="submit"
+                class="whitespace-nowrap disabled:opacity-50"
+                :disabled="!isNewSectionButtonEnabled"
+              >
+                {{ $t('add section') }}
+              </ButtonIcon>
             </form>
           </template>
         </draggable>
@@ -72,6 +77,7 @@ const router = useRouter()
 const route = useRoute()
 const isCreating = computed(() => route.params.id === undefined)
 const isUpdating = computed(() => !isCreating.value)
+const isNewSectionButtonEnabled = computed(() => newSectionTitle.value.length > 2)
 
 const addSection = () => {
   if (newSectionTitle.value.length <= 2) {

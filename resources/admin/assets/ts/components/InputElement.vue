@@ -6,7 +6,7 @@
       :value="modelValue"
       @input="emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
       @blur="emit('update', ($event.target as HTMLInputElement)?.value)"
-      class="h-full w-full bg-transparent px-2 border-none focus:ring-0 focus:border-none"
+      class="h-full w-full bg-transparent px-2 py-3 border-none focus:ring-0 focus:border-none"
     />
   </div>
 </template>

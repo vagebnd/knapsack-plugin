@@ -1,12 +1,15 @@
 <template>
-  <details class="group/item bg-gray-100 rounded-md">
-    <summary
-      class="flex bg-gray-200 p-4 justify-between rounded-md group-open/item:rounded-bl-none group-open/item:rounded-br-none"
-    >
+  <Collapsable
+    class="[&_summary]:bg-gray-200 [&_summary]:ring-1 [&_summary]:ring-gray-200 [&_.body]:ring-1 [&_.body]:ring-gray-200"
+  >
+    <template #close>
       <h1 class="text-gray-900">{{ title }}</h1>
-      <button class="handle w-3"><Icon name="drag-handler" class="w-3 h-3" /></button>
-    </summary>
-    <div class="body p-5 bg-white">
+    </template>
+    <template #open>
+      <h1 class="text-gray-900">{{ title }}</h1>
+    </template>
+
+    <template #body>
       <div class="flex">
         <div class="mb-4 flex-1">
           <InputLabel>{{ $t('title') }}</InputLabel>
@@ -14,7 +17,7 @@
         </div>
         <div class="mb-4 flex-3 ml-3">
           <InputLabel>{{ $t('price') }}</InputLabel>
-          <InputElement v-model="priceLocal" @update="emit('save')" inputmode="decimal" />
+          <InputElement v-model.number="priceLocal" @update="emit('save')" inputmode="decimal" />
         </div>
       </div>
       <div class="mb-4">
@@ -25,18 +28,18 @@
         <InputLabel>{{ $t('tags') }}</InputLabel>
         <vue-tags-input
           v-model="tag"
+          class="w-full !max-w-none [&_.ti-input]:border-none [&_.ti-input]:ring-1 [&_.ti-input]:ring-gray-300 [&_.ti-input]:rounded-md [&_input]:focus:shadow-none [&_.ti-tag]:px-3 [&_.ti-tag]:rounded-md"
           :tags="currenTags"
-          @tags-changed="emitTags"
           :autocomplete-items="autoCompleteTags"
-          class="w-full !max-w-none"
+          @tags-changed="emitTags"
         />
       </div>
       <div>
         <InputLabel>{{ $t('images') }}</InputLabel>
         <ImageManager :images="images" @update="imagesUpdated" />
       </div>
-    </div>
-  </details>
+    </template>
+  </Collapsable>
 </template>
 
 <script lang="ts" setup>

@@ -1,11 +1,11 @@
 import '/@css/tailwind.css'
 
-import mountVue from '../bootstrap/vue'
-import Pricelist from './pricelist/Pricelist.vue'
+import mountVue from '/@admin:bootstrap/vue'
+import Main from './pricelist/Main.vue'
 import Index from './pricelist/Index.vue'
 import Update from './pricelist/Update.vue'
 
-mountVue(Pricelist, [
+mountVue(Main, [
   {
     path: '/',
     name: 'index',

@@ -12,3 +12,4 @@ declare module '*.json' {
 declare module '@sipec/vue3-tags-input'
 
 declare var wp: any
+declare var elementor: any

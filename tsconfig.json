@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "/@admin/*": ["resources/admin/*"],
+      "/@admin:bootstrap/*": ["./resources/admin/assets/ts/bootstrap/*"],
       "/@admin:components/*": ["./resources/admin/assets/ts/components/*"],
       "/@admin:css/*": ["./resources/admin/assets/css/*"],
       "/@admin:layouts/*": ["./resources/admin/assets/ts/layouts/*"],

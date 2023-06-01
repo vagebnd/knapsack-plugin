@@ -30,6 +30,7 @@ export default defineConfig({
       '/@css': resolve(__dirname, './resources/admin/assets/css'),
       '/@admin': resolve(__dirname, './resources/admin'),
       '/@admin:plugins': resolve(__dirname, './resources/admin/assets/ts/plugins'),
+      '/@admin:bootstrap': resolve(__dirname, './resources/admin/assets/ts/bootstrap'),
       '/@admin:components': resolve(__dirname, './resources/admin/assets/ts/components'),
       '/@admin:layouts': resolve(__dirname, './resources/admin/assets/ts/layouts'),
       '/@admin:utils': resolve(__dirname, './resources/admin/assets/ts/utils'),

@@ -10,8 +10,8 @@ export default function mountVue(rootApp: VueElement, routes: RouteRecordRaw[] =
     app.use(getRouter(routes))
   }
 
-  app.mount('#vue')
   registerComponents(app)
+  app.mount('#vue')
 
   return app
 }

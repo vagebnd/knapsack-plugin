@@ -22,7 +22,8 @@
       "/@admin:layouts/*": ["./resources/admin/assets/ts/layouts/*"],
       "/@admin:plugins/*": ["./resources/admin/assets/ts/plugins/*"],
       "/@admin:utils/*": ["./resources/admin/assets/ts/utils/*"],
-      "/@admin:views/*": ["./resources/admin/assets/ts/views/*"]
+      "/@admin:views/*": ["./resources/admin/assets/ts/views/*"],
+      "/@admin:blocks/*": ["./resources/admin/assets/ts/blocks/*"]
     }
   },
   "include": ["resources/**/*.ts", "resources/**/*.d.ts", "resources/**/*.tsx", "resources/**/*.vue"]

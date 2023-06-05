@@ -1,9 +1,9 @@
 <template>
   <div class="layout admin mt-5 mr-5">
     <header
-      class="flex items-center justify-between bg-gray-800 p-4 text-white rounded-tl-lg rounded-tr-lg ring-1 ring-gray-800"
+      class="flex items-center justify-between bg-gray-800 p-4 text-gray-0 rounded-tl-lg rounded-tr-lg ring-1 ring-gray-800"
     >
-      <div class="title flex text-white">
+      <div class="title flex text-gray-0">
         <slot name="title" />
       </div>
       <div class="actions">

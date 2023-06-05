@@ -1,5 +1,5 @@
 <template>
-  <i class="w-4 h-4 flex justify-center items-center" v-html="iconRaw"></i>
+  <i class="w-3 flex justify-center items-center text-white [&_svg]:w-full [&_svg]:h-full" v-html="iconRaw"></i>
 </template>
 
 <script lang="ts" setup>

@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-row items-center rounded-md focus:ring-sky-500 border-0 ring-gray-300 ring-1">
-    <Icon :name="icon" class="text-current ml-2 w-3" v-if="icon" />
+  <div class="flex flex-row items-center rounded-md border-none mb-4 ring-1 ring-zinc-500">
+    <Icon :name="icon" class="text-current ml-1" v-if="icon" />
     <input
       type="text"
       :value="modelValue"
       @input="emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
       @blur="emit('update', ($event.target as HTMLInputElement)?.value)"
-      class="h-full w-full bg-transparent px-2 py-3 border-none focus:ring-0 focus:border-none"
+      class="w-full bg-transparent text-white p-2 min-h-0 border-none focus:ring-0 focus:border-none text-xs"
     />
   </div>
 </template>

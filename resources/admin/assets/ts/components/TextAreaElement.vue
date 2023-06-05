@@ -3,7 +3,8 @@
     :value="modelValue"
     @input="emit('update:modelValue', ($event.target as HTMLTextAreaElement)?.value)"
     @blur="emit('update')"
-    class="px-3 py-3 ring-1 ring-gray-300 block w-full rounded-md focus:ring-sky-500 border-0"
+    class="p-2 block w-full rounded-md border-none resize-none ring-1 ring-zinc-500 bg-transparent text-xs text-white"
+    rows="3"
   >
   </textarea>
 </template>

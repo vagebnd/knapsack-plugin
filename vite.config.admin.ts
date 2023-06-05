@@ -33,6 +33,7 @@ export default defineConfig({
       '/@admin:bootstrap': resolve(__dirname, './resources/admin/assets/ts/bootstrap'),
       '/@admin:components': resolve(__dirname, './resources/admin/assets/ts/components'),
       '/@admin:layouts': resolve(__dirname, './resources/admin/assets/ts/layouts'),
+      '/@admin:blocks': resolve(__dirname, './resources/admin/assets/ts/blocks'),
       '/@admin:utils': resolve(__dirname, './resources/admin/assets/ts/utils'),
       '/@admin:views': resolve(__dirname, './resources/admin/assets/ts/views'),
       '/@admin:css': resolve(__dirname, './resources/admin/assets/css'),

@@ -1,5 +1,6 @@
 <div class="pricelist">
-    @if(! empty($priceList))
+    @if(! empty($priceLists))
+    @foreach ($priceLists as $priceList)
     <h1>{{ $priceList->post_title }}</h1>
 
     <ul>
@@ -29,6 +30,7 @@
         </li>
         @endforeach
     </ul>
+    @endforeach
     @else
     {{ __('No menus available') }}
     @endif

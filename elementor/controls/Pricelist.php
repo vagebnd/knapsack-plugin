@@ -13,13 +13,12 @@ class Pricelist extends \Elementor\Base_Data_Control
 
     protected function get_default_settings()
     {
-        return [
-        ];
+        return [];
     }
 
     public function get_default_value()
     {
-        return 'EUR';
+        return [];
     }
 
     public function content_template()

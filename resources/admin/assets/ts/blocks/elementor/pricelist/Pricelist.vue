@@ -8,6 +8,10 @@
         <InputLabel>{{ $t('title') }}</InputLabel>
         <InputElement v-model="priceList.title" @update="save" />
       </div>
+      <div class="flex justify-between">
+        <InputLabel>{{ $t('show in widget') }}</InputLabel>
+        <Checkbox v-model="isActiveLocal" />
+      </div>
       <div>
         <InputLabel>{{ $t('sections') }}</InputLabel>
         <draggable v-model="priceList.sections" group="people" item-key="id" handle=".drag-handler" @end="save">
@@ -50,10 +54,12 @@ type PriceList = {
 const emit = defineEmits<{
   (event: 'created', value: number): void
   (event: 'delete'): void
+  (event: 'activate', value: { id: number; isActive: boolean }): void
 }>()
 
 const props = defineProps<{
-  priceListID?: number
+  id?: number
+  isActive: boolean
 }>()
 
 const priceList = ref<PriceList>({
@@ -62,8 +68,18 @@ const priceList = ref<PriceList>({
 })
 
 const tags = ref<string[]>([])
-const isCreating = computed(() => props.priceListID === undefined)
+const isCreating = computed(() => props.id === undefined)
 const isUpdating = computed(() => !isCreating.value)
+
+const isActiveLocal = computed({
+  get: () => props.isActive,
+  set: (value) => {
+    emit('activate', {
+      id: props.id as number,
+      isActive: value,
+    })
+  },
+})
 
 const addSection = (title: string) => {
   priceList.value.sections.push({
@@ -78,7 +94,7 @@ const addSection = (title: string) => {
 
 const deletePriceList = () => {
   http
-    .delete(`pricelist/${props.priceListID}`)
+    .delete(`pricelist/${props.id}`)
     .then((response) => emit('delete'))
     .catch((error) => {
       // TODO: handle error
@@ -86,9 +102,7 @@ const deletePriceList = () => {
 }
 
 const save = () => {
-  const endpoint = isCreating.value ? 'pricelist/create' : `pricelist/${props.priceListID}`
-
-  console.log(priceList.value.sections)
+  const endpoint = isCreating.value ? 'pricelist/create' : `pricelist/${props.id}`
 
   http
     .post(endpoint, {
@@ -97,15 +111,19 @@ const save = () => {
     })
     .then((response) => {
       if (isCreating.value) {
-        emit('created', response.data.priceListID)
+        emit('created', response.data.id)
       }
 
       fetchTags()
-      dispatchSaveEvent()
+      dispatchReloadEvent()
     })
     .catch((error) => {
       // TODO: handle error
     })
+}
+
+const dispatchReloadEvent = () => {
+  window.dispatchEvent(new CustomEvent('knapsack/iframe/reload'))
 }
 
 const deleteSection = (id: number) => {
@@ -124,7 +142,7 @@ const fetchTags = () => {
 
 const fetchMenu = () => {
   http
-    .get(`pricelist/${props.priceListID}`)
+    .get(`pricelist/${props.id}`)
     .then((response) => {
       priceList.value.title = response.data.title
       priceList.value.sections = response.data.sections
@@ -132,14 +150,12 @@ const fetchMenu = () => {
     .catch((error) => {})
 }
 
-const dispatchSaveEvent = () => {
-  window.dispatchEvent(new CustomEvent('vgb/pricelist/saved'))
-}
-
 onMounted(() => {
   if (isUpdating.value) {
     fetchMenu()
     fetchTags()
+  } else {
+    save()
   }
 })
 </script>

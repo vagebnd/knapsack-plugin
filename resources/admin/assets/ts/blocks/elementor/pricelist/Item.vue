@@ -46,6 +46,7 @@ import { computed, ref } from 'vue'
 import { Image } from '/@admin:components/ImageManager/Image.vue'
 import VueTagsInput from '@sipec/vue3-tags-input'
 import { $t } from '/@admin:plugins/i18n'
+import { empty } from '/@admin:utils/object'
 
 export type PricelistItem = {
   id: number
@@ -109,9 +110,11 @@ const priceLocal = computed({
 })
 
 const autoCompleteTags = computed(() => {
-  return props.tagOptions.map((tag) => {
-    return { text: tag }
-  })
+  return props.tagOptions
+    .map((tag) => {
+      return { text: tag }
+    })
+    .filter((tag) => !empty(tag.text))
 })
 
 const currenTags = computed(() => {

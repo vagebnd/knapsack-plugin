@@ -4,7 +4,13 @@
     <div v-else class="flex flex-col">
       <ul v-if="priceLists.length > 0" class="flex-1">
         <li v-for="list in priceLists" class="mb-3">
-          <PriceList :priceListID="list.id" @delete="fetchPriceLists" />
+          <PriceList
+            :id="list.id"
+            :is-active="activeIDs.has(list.id)"
+            @delete="fetchPriceLists"
+            @created="fetchPriceLists"
+            @activate="activatePriceList"
+          />
         </li>
       </ul>
       <p class="mb-4" v-else>{{ $t('No pricelists yet.') }}</p>
@@ -16,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { http } from '/@admin:utils/http'
 import PriceList from './Pricelist.vue'
 import AddItem from './AddItem.vue'
@@ -27,22 +33,37 @@ export type PriceListType = {
   title: string
 }
 
+const props = defineProps<{
+  currentValue: number[]
+}>()
+
 const isLoading = ref(false)
 const priceLists = ref<PriceListType[]>([])
-const selectedPriceListIDs = ref<number[]>([])
-const priceListActive = ref<PriceListType>()
+const activeIDs = ref(new Set<number>())
 
-// const isPriceListActive = computed(() => !!priceListActive.value)
-// const priceListsSelected = computed(() =>
-//   priceLists.value.filter((list) => selectedPriceListIDs.value.includes(list.id)),
-// )
+const activatePriceList = ({ id, isActive }: { id: number; isActive: boolean }) => {
+  if (isActive) {
+    activeIDs.value.add(id)
+  } else {
+    activeIDs.value.delete(id)
+  }
+
+  dispatchSaveEvent()
+}
+
+const dispatchSaveEvent = () => {
+  window.dispatchEvent(
+    new CustomEvent('knapsack/control/save', {
+      detail: Array.from(activeIDs.value),
+    }),
+  )
+}
 
 const fetchPriceLists = () => {
   http
     .get('pricelist')
     .then((response) => {
       priceLists.value = response.data
-      selectedPriceListIDs.value = response.data.map((list: PriceListType) => list.id)
     })
     .catch((error) => {
       // TODO: handle error
@@ -55,5 +76,11 @@ const createPriceList = () => {
   })
 }
 
-onMounted(fetchPriceLists)
+onMounted(() => {
+  fetchPriceLists()
+
+  props.currentValue.forEach((id) => {
+    activeIDs.value.add(id)
+  })
+})
 </script>

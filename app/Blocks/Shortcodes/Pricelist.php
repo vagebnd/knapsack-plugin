@@ -13,11 +13,17 @@ class Pricelist extends Shortcode
 
     public function render($attrs, $content = null)
     {
-        $priceListID = Arr::get($attrs, 'pricelist', null);
-        $priceList = ModelsPriceList::find($priceListID);
+        $priceListIDs = Arr::wrap(Arr::get($attrs, 'pricelist', []));
+
+        $priceLists = collect($priceListIDs)
+            ->map(function ($priceListID) {
+                return ModelsPriceList::find($priceListID);
+            })
+            ->filter()
+            ->toArray();
 
         return app(ViewContract::class)->render('shortcodes.pricelist', [
-            'priceList' => $priceList,
+            'priceLists' => $priceLists,
         ]);
     }
 }

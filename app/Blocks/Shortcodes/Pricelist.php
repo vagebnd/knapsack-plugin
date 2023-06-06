@@ -22,7 +22,7 @@ class Pricelist extends Shortcode
             ->filter()
             ->toArray();
 
-        return app(ViewContract::class)->render('shortcodes.pricelist', [
+        return app(ViewContract::class)->render('shared.views.shortcodes.pricelist', [
             'priceLists' => $priceLists,
         ]);
     }

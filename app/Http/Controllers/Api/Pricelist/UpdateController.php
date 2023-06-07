@@ -69,7 +69,7 @@ class UpdateController extends Controller
         }
 
         return [
-            'priceListID' => $priceList->ID,
+            'id' => $priceList->ID,
         ];
     }
 }

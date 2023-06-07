@@ -53,7 +53,6 @@ export type PriceList = {
   id?: number
   title: string
   type: string
-  isActive: boolean
   sections: PricelistSection[]
 }
 
@@ -65,16 +64,17 @@ const emit = defineEmits<{
 
 const props = defineProps<{
   id?: number
+  title: string
   isActive: boolean
 }>()
 
 const types = inject('types') as Record<string, string>
 
 const priceList = ref<PriceList>({
+  id: undefined,
   title: $t('new menu'),
   type: Object.keys(types)[0],
   sections: [],
-  isActive: true,
 })
 
 const tags = ref<string[]>([])
@@ -84,10 +84,7 @@ const isUpdating = computed(() => !isCreating.value)
 const isActiveLocal = computed({
   get: () => props.isActive,
   set: (value) => {
-    emit('activate', {
-      id: props.id as number,
-      isActive: value,
-    })
+    emitActivate(props.id as number, value)
   },
 })
 
@@ -103,6 +100,8 @@ const addSection = (title: string) => {
 }
 
 const deletePriceList = () => {
+  emitActivate(props.id as number, false)
+
   http
     .delete(`pricelist/${props.id}`)
     .then((response) => emit('delete'))
@@ -123,6 +122,7 @@ const save = () => {
     .then((response) => {
       if (isCreating.value) {
         emit('created', response.data.id)
+        emitActivate(response.data.id, true)
       }
 
       fetchTags()
@@ -162,7 +162,17 @@ const fetchPriceList = () => {
     .catch((error) => {})
 }
 
+const emitActivate = (id: number, isActive: boolean) => {
+  emit('activate', {
+    id,
+    isActive,
+  })
+}
+
 onMounted(() => {
+  priceList.value.id = props.id
+  priceList.value.title = props.title
+
   if (isUpdating.value) {
     fetchPriceList()
     fetchTags()

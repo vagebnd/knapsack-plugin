@@ -6,6 +6,7 @@
         <li v-for="list in priceLists" class="mb-3">
           <PriceList
             :id="list.id"
+            :title="list.title"
             :is-active="activeIDs.has(list.id as number)"
             @delete="fetchPriceLists"
             @created="fetchPriceLists"
@@ -66,10 +67,9 @@ const fetchPriceLists = () => {
     })
 }
 
-const createPriceList = () => {
+const createPriceList = (value: string) => {
   priceLists.value.push({
-    title: $t('new pricelist'),
-    isActive: true,
+    title: value,
     type: Object.keys(props.types)[0],
     sections: [],
   })

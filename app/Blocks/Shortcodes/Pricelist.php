@@ -16,11 +16,13 @@ class Pricelist extends Shortcode
         $priceListIDs = Arr::wrap(Arr::get($attrs, 'pricelist', []));
 
         $priceLists = collect($priceListIDs)
+            ->filter(function ($priceListID) {
+                return is_int($priceListID);
+            })
             ->map(function ($priceListID) {
                 return ModelsPriceList::find($priceListID);
             })
-            ->filter()
-            ->toArray();
+            ->filter();
 
         return app(ViewContract::class)->render('shared.views.shortcodes.pricelist', [
             'priceLists' => $priceLists,

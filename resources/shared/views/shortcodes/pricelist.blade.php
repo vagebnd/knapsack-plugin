@@ -1,37 +1,26 @@
 <div class="pricelist">
-    @if(! empty($priceLists))
-    @foreach ($priceLists as $priceList)
-    <h1>{{ $priceList->post_title }}</h1>
-
-    <ul>
-        @foreach ($priceList->sections() as $section)
-        <li>
-            <h2>{{ $section->post_title }}</h2>
-            <ul>
-                @foreach ($section->items() as $item)
-                <li>
-                    <h3>{{ $item->post_title }}</h3>
-                    <p>{{ $item->post_content }}</p>
-                    <ul>
-                        @foreach ($item->tags() as $tag)
-                        <li>{{ $tag }}</li>
-                        @endforeach
-                    </ul>
-                    <ul>
-                        @foreach ($item->images() as $image)
-                        <li>
-                            <img src="{{ $image['thumb'] }}" />
-                        </li>
-                        @endforeach
-                    </ul>
-                </li>
-                @endforeach
-            </ul>
-        </li>
-        @endforeach
-    </ul>
-    @endforeach
-    @else
+    @if($priceLists->isEmpty())
     {{ __('No menus available') }}
+    @else
+    @if($priceLists->count() === 1)
+    @include('shared.views.shortcodes.pricelist.' . $priceLists->first()->type, ['priceList' => $priceLists->first()])
+    @else
+
+    <TabGroup>
+        <TabList>
+            @foreach($priceLists as $priceList)
+            <Tab>{{ $priceList->post_title }}</Tab>
+            @endforeach
+        </TabList>
+        <TabPanels>
+            @foreach($priceLists as $priceList)
+            <TabPanel>
+                @include('shared.views.shortcodes.pricelist.' . $priceList->type, ['priceList' => $priceList])
+            </TabPanel>
+            @endforeach
+        </TabPanels>
+    </TabGroup>
+
+    @endif
     @endif
 </div>

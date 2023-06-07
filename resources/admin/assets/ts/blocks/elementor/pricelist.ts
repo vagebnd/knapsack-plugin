@@ -9,10 +9,10 @@ const init = () => {
   const pricelistView = elementor.modules.controls.BaseData.extend({
     onReady() {
       Promise.resolve().then(() => {
-        currentValue = this.getCurrentValue()
+        this.currentValue = this.getCurrentValue()
 
         mountVue(PriceLists, {
-          currentValue,
+          currentValue: this.currentValue,
           types: this.model.get('types'),
         })
 

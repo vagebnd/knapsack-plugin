@@ -9,6 +9,7 @@ use Knapsack\Compass\Support\Facades\Config;
 class PriceListType extends Enum
 {
     public const SLIDER = 'slider';
+    public const ROWS = 'rows';
     public const COLUMNS = 'columns';
 
     public static function getDescription($value): string
@@ -17,6 +18,7 @@ class PriceListType extends Enum
 
         $map = [
             self::SLIDER => __('slider', $textDomain),
+            self::ROWS => __('rows', $textDomain),
             self::COLUMNS => __('columns', $textDomain),
         ];
 

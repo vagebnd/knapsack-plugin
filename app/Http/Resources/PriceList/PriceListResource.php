@@ -17,6 +17,7 @@ class PriceListResource extends JsonResource
         return [
             'id' => $this->ID,
             'title' => $this->post_title,
+            'type' => $this->type,
             'sections' => PriceListSectionResource::collection($this->sections()),
         ];
     }

@@ -6,7 +6,7 @@
         <li v-for="list in priceLists" class="mb-3">
           <PriceList
             :id="list.id"
-            :is-active="activeIDs.has(list.id)"
+            :is-active="activeIDs.has(list.id as number)"
             @delete="fetchPriceLists"
             @created="fetchPriceLists"
             @activate="activatePriceList"
@@ -22,19 +22,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { onMounted, provide, ref } from 'vue'
 import { http } from '/@admin:utils/http'
-import PriceList from './Pricelist.vue'
+import PriceList, { PriceList as PriceListType } from './Pricelist.vue'
 import AddItem from './AddItem.vue'
 import { $t } from '/@admin:plugins/i18n'
 
-export type PriceListType = {
-  id?: number
-  title: string
-}
-
 const props = defineProps<{
   currentValue: number[]
+  types: Record<string, string>
 }>()
 
 const isLoading = ref(false)
@@ -73,6 +69,9 @@ const fetchPriceLists = () => {
 const createPriceList = () => {
   priceLists.value.push({
     title: $t('new pricelist'),
+    isActive: true,
+    type: Object.keys(props.types)[0],
+    sections: [],
   })
 }
 
@@ -82,5 +81,7 @@ onMounted(() => {
   props.currentValue.forEach((id) => {
     activeIDs.value.add(id)
   })
+
+  provide('types', props.types)
 })
 </script>

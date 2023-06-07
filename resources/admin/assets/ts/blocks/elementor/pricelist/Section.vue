@@ -94,7 +94,6 @@ const nextItemID = computed(() => {
 })
 
 const addItem = (title: string) => {
-  console.log(title)
   itemsLocal.value = [
     ...itemsLocal.value,
     {

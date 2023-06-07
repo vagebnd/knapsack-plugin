@@ -2,8 +2,9 @@
 
 namespace Skeleton\Elementor\Widgets;
 
+use Knapsack\Compass\Support\Facades\Config;
 use Skeleton\Blocks\Shortcodes\Pricelist as ShortcodesPricelist;
-use Skeleton\Models\PriceList as ModelsPriceList;
+use Skeleton\Enums\PriceListType;
 
 class Pricelist extends \Elementor\Widget_Base
 {
@@ -34,18 +35,12 @@ class Pricelist extends \Elementor\Widget_Base
 
     protected function register_controls()
     {
-        $priceLists = ModelsPriceList::all();
-
-        $priceListOptions = $priceLists
-            ->mapWithKeys(function ($priceList) {
-                return [$priceList->ID => $priceList->post_title];
-            })
-            ->toArray();
+        $textDomain = Config::get('app.text-domain');
 
         $this->start_controls_section(
             'section_title',
             [
-                'label' => esc_html__('Pricelist', 'elementor-addon'),
+                'label' => esc_html__('Pricelist', $textDomain),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -53,8 +48,9 @@ class Pricelist extends \Elementor\Widget_Base
         $this->add_control(
             'pricelist',
             [
-                'label' => esc_html__('Pricelist', 'elementor-addon'),
+                'label' => esc_html__('Pricelist', $textDomain),
                 'type' => 'pricelist',
+                'types' => PriceListType::asSelectArray(),
             ]
         );
 

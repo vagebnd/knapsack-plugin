@@ -10,11 +10,15 @@ const init = () => {
     onReady() {
       Promise.resolve().then(() => {
         currentValue = this.getCurrentValue()
-        mountVue(PriceLists, currentValue)
-      })
 
-      window.addEventListener('knapsack/control/save', this.saveListener.bind(this))
-      window.addEventListener('knapsack/iframe/reload', this.save.bind(this))
+        mountVue(PriceLists, {
+          currentValue,
+          types: this.model.get('types'),
+        })
+
+        window.addEventListener('knapsack/control/save', this.saveListener.bind(this))
+        window.addEventListener('knapsack/iframe/reload', this.save.bind(this))
+      })
     },
     onBeforeDestroy() {
       window.removeEventListener('knapsack/control/save', this.saveListener)

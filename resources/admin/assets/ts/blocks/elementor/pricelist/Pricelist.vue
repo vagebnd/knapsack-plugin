@@ -8,6 +8,10 @@
         <InputLabel>{{ $t('title') }}</InputLabel>
         <InputElement v-model="priceList.title" @update="save" />
       </div>
+      <div class="mb-4">
+        <InputLabel>{{ $t('display mode') }}</InputLabel>
+        <SelectElement v-model="priceList.type" :options="types" @update="save" />
+      </div>
       <div class="flex justify-between">
         <InputLabel>{{ $t('show in widget') }}</InputLabel>
         <Checkbox v-model="isActiveLocal" />
@@ -39,15 +43,17 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable'
 import { $t } from '/@admin:plugins/i18n'
-import { computed, onMounted, ref } from 'vue'
+import { computed, inject, onMounted, ref } from 'vue'
 import Section, { PricelistSection } from './Section.vue'
 import { http } from '/@admin:utils/http'
 import collect from 'collect.js'
 import AddItem from './AddItem.vue'
 
-type PriceList = {
+export type PriceList = {
   id?: number
   title: string
+  type: string
+  isActive: boolean
   sections: PricelistSection[]
 }
 
@@ -62,9 +68,13 @@ const props = defineProps<{
   isActive: boolean
 }>()
 
+const types = inject('types') as Record<string, string>
+
 const priceList = ref<PriceList>({
   title: $t('new menu'),
+  type: Object.keys(types)[0],
   sections: [],
+  isActive: true,
 })
 
 const tags = ref<string[]>([])
@@ -107,6 +117,7 @@ const save = () => {
   http
     .post(endpoint, {
       title: priceList.value.title,
+      type: priceList.value.type,
       sections: priceList.value.sections,
     })
     .then((response) => {
@@ -140,11 +151,12 @@ const fetchTags = () => {
     .catch((error) => {})
 }
 
-const fetchMenu = () => {
+const fetchPriceList = () => {
   http
     .get(`pricelist/${props.id}`)
     .then((response) => {
       priceList.value.title = response.data.title
+      priceList.value.type = response.data.type
       priceList.value.sections = response.data.sections
     })
     .catch((error) => {})
@@ -152,7 +164,7 @@ const fetchMenu = () => {
 
 onMounted(() => {
   if (isUpdating.value) {
-    fetchMenu()
+    fetchPriceList()
     fetchTags()
   } else {
     save()

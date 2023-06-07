@@ -4,6 +4,9 @@ namespace Skeleton\Models;
 
 use Knapsack\Compass\Support\Orm\Model;
 
+/**
+ * @property string $type
+ */
 class PriceList extends Model
 {
     public static function clean(int $id)

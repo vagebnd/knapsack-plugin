@@ -15,6 +15,7 @@ class UpdateController extends Controller
     {
         $request->validate([
             'title' => ['min:2', 'max:200'],
+            'type' => ['required'],
             'content' => ['min:2', 'max:500'],
             'sections' => ['array'],
             'sections.*.title' => ['required', 'min:2', 'max:200'],
@@ -29,11 +30,13 @@ class UpdateController extends Controller
                 'ID' => $id,
                 'post_title' => $request->input('title'),
                 'post_content' => $request->input('content', ''),
+                'type' => $request->input('type', ''),
             ]);
         } else {
             $priceList = PriceList::create([
                 'post_title' => $request->input('title'),
                 'post_content' => $request->input('content', ''),
+                'type' => $request->input('type', ''),
             ]);
         }
 

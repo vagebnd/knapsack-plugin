@@ -4,8 +4,11 @@ import hotfile from './resources/vite/hotfile'
 import fg from 'fast-glob'
 import vue from '@vitejs/plugin-vue'
 
-const rootPath = './resources/admin/assets/ts'
-const input = fg.sync(resolve(__dirname, './resources/admin/assets/ts/*.ts')).sort()
+const rootPath = './resources/'
+const input = [
+  ...fg.sync(resolve(__dirname, './resources/admin/assets/ts/*.ts')).sort(),
+  ...fg.sync(resolve(__dirname, './resources/shared/assets/ts/*.ts')).sort(),
+]
 
 export default defineConfig({
   plugins: [hotfile(), vue()],

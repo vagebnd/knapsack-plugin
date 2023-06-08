@@ -30,6 +30,6 @@ class Pricelist extends \Elementor\Base_Data_Control
 
     public function enqueue()
     {
-        vite()->asset('blocks/elementor/pricelist.ts');
+        vite()->asset('admin/assets/ts/blocks/elementor/pricelist.ts');
     }
 }

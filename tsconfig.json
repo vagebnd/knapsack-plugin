@@ -23,7 +23,13 @@
       "/@admin:plugins/*": ["./resources/admin/assets/ts/plugins/*"],
       "/@admin:utils/*": ["./resources/admin/assets/ts/utils/*"],
       "/@admin:views/*": ["./resources/admin/assets/ts/views/*"],
-      "/@admin:blocks/*": ["./resources/admin/assets/ts/blocks/*"]
+      "/@admin:blocks/*": ["./resources/admin/assets/ts/blocks/*"],
+      "/@shared/*": ["resources/shared/*"],
+      "/@shared:components/*": ["./resources/shared/assets/ts/components/*"],
+      "/@shared:css/*": ["./resources/shared/assets/css/*"],
+      "/@shared:plugins/*": ["./resources/shared/assets/ts/plugins/*"],
+      "/@shared:utils/*": ["./resources/shared/assets/ts/utils/*"],
+      "/@shared:views/*": ["./resources/shared/assets/ts/views/*"]
     }
   },
   "include": ["resources/**/*.ts", "resources/**/*.d.ts", "resources/**/*.tsx", "resources/**/*.vue"]

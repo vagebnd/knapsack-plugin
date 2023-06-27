@@ -4,6 +4,7 @@ namespace Skeleton\Blocks\Integrations\Elementor;
 
 use Skeleton\Blocks\Contracts\IntegrationContract;
 use function Skeleton\Support\path;
+use function Skeleton\Support\vite;
 
 if (! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -41,6 +42,18 @@ class Elementor implements IntegrationContract
             add_action('elementor/init', function () {
                 require_once path('elementor/Factory.php');
                 new \Skeleton\Elementor\Factory();
+            });
+
+            add_action('elementor/editor/before_enqueue_scripts', function () {
+                vite()->asset('admin/assets/ts/views/elementor-editor/application.ts');
+            });
+
+            add_action('elementor/editor/after_enqueue_scripts', function () {
+                vite()->asset('admin/assets/ts/views/elementor-editor/context-menu.ts');
+            });
+
+            add_action('elementor/editor/before_enqueue_styles', function () {
+                vite()->asset('admin/assets/css/views/elementor-editor.css');
             });
         }
     }

@@ -13,3 +13,11 @@ declare module '@sipec/vue3-tags-input'
 
 declare var wp: any
 declare var elementor: any
+declare var $e: any
+declare var elementorFrontend: any
+
+interface Window {
+  $skeletonApp: {
+    openSaveModal: () => void
+  }
+}

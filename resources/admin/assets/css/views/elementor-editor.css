@@ -1,0 +1,17 @@
+#skeleton-component-library,
+#headlessui-portal-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+#skeleton-component-library {
+  z-index: 99;
+  pointer-events: none;
+}
+
+#headlessui-portal-root {
+  z-index: 9999;
+}

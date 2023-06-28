@@ -26,6 +26,7 @@ class Pricelist extends Shortcode
 
         return app(ViewContract::class)->render('shared.views.shortcodes.pricelist', [
             'priceLists' => $priceLists,
+            'elementID' => Arr::get($attrs, 'elementID'),
         ]);
     }
 }

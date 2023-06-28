@@ -3,19 +3,29 @@
 namespace Skeleton\Elementor\Widgets;
 
 use Knapsack\Compass\Support\Facades\Config;
-use Skeleton\Blocks\Shortcodes\Pricelist as ShortcodesPricelist;
+use Skeleton\Blocks\Shortcodes\Pricelist;
 use Skeleton\Enums\PriceListType;
+use function Skeleton\Support\vite;
 
-class Pricelist extends \Elementor\Widget_Base
+class Pricelists extends \Elementor\Widget_Base
 {
+    private $_widget_id = 'pricelists';
+
+    public function __construct($data = [], $args = null)
+    {
+        parent::__construct($data, $args);
+
+        vite()->asset('shared/assets/ts/blocks/init.ts');
+    }
+
     public function get_name()
     {
-        return 'pricelist';
+        return $this->_widget_id;
     }
 
     public function get_title()
     {
-        return esc_html__('Pricelist', 'elementor-addon');
+        return esc_html__('Pricelists', 'elementor-addon');
     }
 
     public function get_icon()
@@ -31,6 +41,11 @@ class Pricelist extends \Elementor\Widget_Base
     public function get_keywords()
     {
         return ['hello', 'world'];
+    }
+
+    public function get_script_depends()
+    {
+        return [$this->_widget_id.'-script'];
     }
 
     protected function register_controls()
@@ -59,8 +74,9 @@ class Pricelist extends \Elementor\Widget_Base
 
     protected function render()
     {
-        $settings = $this->get_settings_for_display();
+        $attrs = $this->get_settings_for_display();
+        $attrs['elementID'] = $this->_widget_id . '-' . $this->get_id();
 
-        echo (new ShortcodesPricelist())->render($settings);
+        echo (new Pricelist())->render($attrs);
     }
 }

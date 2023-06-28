@@ -1,4 +1,4 @@
-<div class="pricelist">
+<div class="vue pricelists" id="{{ $elementID }}">
     @if($priceLists->isEmpty())
     {{ __('No menus available') }}
     @else
@@ -6,7 +6,7 @@
     @include('shared.views.shortcodes.pricelist.' . $priceLists->first()->type, ['priceList' => $priceLists->first()])
     @else
 
-    <TabGroup>
+    <TabGroup @change="changeTab">
         <TabList>
             @foreach($priceLists as $priceList)
             <Tab>{{ $priceList->post_title }}</Tab>
@@ -20,7 +20,6 @@
             @endforeach
         </TabPanels>
     </TabGroup>
-
     @endif
     @endif
 </div>

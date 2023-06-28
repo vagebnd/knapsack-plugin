@@ -24,6 +24,7 @@
       "/@admin:utils/*": ["./resources/admin/assets/ts/utils/*"],
       "/@admin:views/*": ["./resources/admin/assets/ts/views/*"],
       "/@admin:blocks/*": ["./resources/admin/assets/ts/blocks/*"],
+      "/@admin:types/*": ["./resources/admin/assets/ts/types/*"],
       "/@shared/*": ["resources/shared/*"],
       "/@shared:components/*": ["./resources/shared/assets/ts/components/*"],
       "/@shared:css/*": ["./resources/shared/assets/css/*"],

@@ -19,6 +19,20 @@ if (! function_exists('app_path')) {
     }
 }
 
+if (! function_exists('resource_path')) {
+    function resource_path($path = '')
+    {
+        return path('resources/' . $path);
+    }
+}
+
+if (! function_exists('storage_path')) {
+    function storage_path($path = '')
+    {
+        return path('storage/' . $path);
+    }
+}
+
 if (! function_exists('url')) {
     function url($path = '')
     {

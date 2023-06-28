@@ -12,8 +12,13 @@ export default function mergeWithSharedConfig(config: UserConfigExport) {
           input: fg.sync(resolve(__dirname, './resources/shared/assets/ts/*.ts')).sort(),
         },
       },
+      define: {
+        __VUE_OPTIONS_API__: true,
+        __VUE_PROD_DEVTOOLS__: false,
+      },
       resolve: {
         alias: {
+          'vue': 'vue/dist/vue.esm-bundler.js',
           '/@shared': resolve(__dirname, './resources/shared'),
           '/@shared:plugins': resolve(__dirname, './resources/shared/assets/ts/plugins'),
           '/@shared:components': resolve(__dirname, './resources/shared/assets/ts/components'),

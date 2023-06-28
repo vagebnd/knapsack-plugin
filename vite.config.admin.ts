@@ -4,6 +4,9 @@ import hotfile from './resources/vite/hotfile'
 import fg from 'fast-glob'
 import vue from '@vitejs/plugin-vue'
 import mergeWithSharedConfig from './vite.config.shared'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const rootPath = './resources/'
 
@@ -34,6 +37,7 @@ export default defineConfig(
         '/@admin:bootstrap': resolve(__dirname, './resources/admin/assets/ts/bootstrap'),
         '/@admin:components': resolve(__dirname, './resources/admin/assets/ts/components'),
         '/@admin:layouts': resolve(__dirname, './resources/admin/assets/ts/layouts'),
+        '/@admin:types': resolve(__dirname, './resources/admin/assets/ts/types'),
         '/@admin:blocks': resolve(__dirname, './resources/admin/assets/ts/blocks'),
         '/@admin:utils': resolve(__dirname, './resources/admin/assets/ts/utils'),
         '/@admin:views': resolve(__dirname, './resources/admin/assets/ts/views'),

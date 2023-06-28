@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 import { onMounted, provide, ref } from 'vue'
-import { http } from '/@admin:utils/http'
+import client from '/@admin:utils/http/wp'
 import PriceList, { PriceList as PriceListType } from './Pricelist.vue'
 import AddItem from './AddItem.vue'
 import { $t } from '/@admin:plugins/i18n'
@@ -57,7 +57,7 @@ const dispatchSaveEvent = () => {
 }
 
 const fetchPriceLists = () => {
-  http
+  client
     .get('pricelist')
     .then((response) => {
       priceLists.value = response.data

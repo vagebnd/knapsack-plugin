@@ -45,7 +45,7 @@ import draggable from 'vuedraggable'
 import { $t } from '/@admin:plugins/i18n'
 import { computed, inject, onMounted, ref } from 'vue'
 import Section, { PricelistSection } from './Section.vue'
-import { http } from '/@admin:utils/http'
+import client from '/@admin:utils/http/wp'
 import collect from 'collect.js'
 import AddItem from './AddItem.vue'
 
@@ -102,7 +102,7 @@ const addSection = (title: string) => {
 const deletePriceList = () => {
   emitActivate(props.id as number, false)
 
-  http
+  client
     .delete(`pricelist/${props.id}`)
     .then((response) => emit('delete'))
     .catch((error) => {
@@ -113,7 +113,7 @@ const deletePriceList = () => {
 const save = () => {
   const endpoint = isCreating.value ? 'pricelist/create' : `pricelist/${props.id}`
 
-  http
+  client
     .post(endpoint, {
       title: priceList.value.title,
       type: priceList.value.type,
@@ -143,7 +143,7 @@ const deleteSection = (id: number) => {
 }
 
 const fetchTags = () => {
-  http
+  client
     .get('tags')
     .then((response) => {
       tags.value = response.data
@@ -152,7 +152,7 @@ const fetchTags = () => {
 }
 
 const fetchPriceList = () => {
-  http
+  client
     .get(`pricelist/${props.id}`)
     .then((response) => {
       priceList.value.title = response.data.title

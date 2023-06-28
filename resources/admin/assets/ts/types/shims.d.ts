@@ -1,3 +1,5 @@
+import { VueInstance } from './elementor'
+
 declare module '*.vue' {
   import { defineComponent } from 'vue'
   const component: ReturnType<typeof defineComponent>
@@ -11,13 +13,25 @@ declare module '*.json' {
 
 declare module '@sipec/vue3-tags-input'
 
-declare var wp: any
-declare var elementor: any
-declare var $e: any
-declare var elementorFrontend: any
+declare global {
+  var wp: any
+  var elementor: any
+  var $e: any
+  var elementorFrontend: any
+  var $skeletonApp: VueInstance
+}
 
 interface Window {
   $skeletonApp: {
     openSaveModal: () => void
   }
+}
+
+interface ImportMetaEnv {
+  readonly VITE_THEME_MANAGER_API_URL: string
+  readonly VITE_THEME_MANAGER_API_KEY: string
+  readonly VITE_THEME_MANAGER_THEME_ID: string
+}
+interface ImportMeta {
+  readonly env: ImportMetaEnv
 }

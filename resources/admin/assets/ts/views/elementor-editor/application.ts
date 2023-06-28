@@ -1,20 +1,26 @@
 import '/@admin:css/tailwind.css'
 
-import { ComponentPublicInstance, createApp } from 'vue'
+import { createApp } from 'vue'
 import App from './components/App.vue'
-
-interface VueInstance extends ComponentPublicInstance {
-  openLibrary: () => void
-  openSaveModal: () => void
-}
+import { registerComponents } from '../../bootstrap/components'
+import { VueInstance } from '/@admin:types/elementor'
 
 class Application {
-  public vueInstance!: VueInstance
-
   constructor() {
-    this.initApplication()
+    this.mountVue()
     this.addTailwindClass()
     this.addBlocksButton()
+  }
+
+  mountVue() {
+    const element = document.createElement('div')
+    element.id = 'skeleton-component-library'
+    document.body.appendChild(element)
+
+    const app = createApp(App)
+    registerComponents(app)
+
+    window.$skeletonApp = app.mount(`#${element.id}`) as VueInstance
   }
 
   addBlocksButton() {
@@ -35,28 +41,15 @@ class Application {
         if ((e.target as HTMLElement).closest('.elementor-add-skeleton-blocks-button')) {
           e.preventDefault()
           e.stopPropagation()
-          this.vueInstance.openLibrary()
+          window.$skeletonApp.library.open()
         }
       })
     })
   }
 
-  initApplication() {
-    const element = document.createElement('div')
-    element.id = 'skeleton-component-library'
-    document.body.appendChild(element)
-
-    const app = createApp(App)
-    this.vueInstance = app.mount(`#${element.id}`) as VueInstance
-  }
-
   addTailwindClass() {
     document.body.classList.add('tailwind')
   }
-
-  openSaveModal() {
-    this.vueInstance.openSaveModal()
-  }
 }
 
-window.$skeletonApp = new Application()
+new Application()

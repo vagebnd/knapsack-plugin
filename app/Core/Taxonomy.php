@@ -72,7 +72,7 @@ class Taxonomy
 
     public function labels(): array
     {
-        $textDomain = Config::get('app.text-domain');
+        $textDomain = Config::get('app.text_domain');
 
         $defaults = [
           'name'                    => $this->name,

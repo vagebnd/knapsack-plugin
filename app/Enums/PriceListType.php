@@ -14,7 +14,7 @@ class PriceListType extends Enum
 
     public static function getDescription($value): string
     {
-        $textDomain = Config::get('app.text-domain');
+        $textDomain = Config::get('app.text_domain');
 
         $map = [
             self::SLIDER => __('slider', $textDomain),

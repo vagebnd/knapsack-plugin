@@ -11,7 +11,7 @@ return [
     */
     'name' => 'knapsack_plugin',
 
-    'text-domain' => 'knapsack-plugin',
+    'text_domain' => 'knapsack-plugin',
 
     /*
     |--------------------------------------------------------------------------

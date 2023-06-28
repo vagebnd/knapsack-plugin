@@ -43,3 +43,4 @@ composer.lock
 
 # PHP Cs Fixer
 .php-cs-fixer.cache
+/resources/admin/assets/ts/data

@@ -1,5 +1,6 @@
 import { toast } from 'vue-sonner'
 import { Container, ElementData } from '/@admin:types/elementor'
+import { addHashToContainerSettings } from '/@admin:utils/elementor'
 
 class ContextMenu {
   private menuName = 'skeleton'
@@ -57,7 +58,7 @@ class ContextMenu {
       .readText()
       .then((content) => {
         window.$skeletonApp.elementSaver.open(view.container, content).then((data: ElementData) => {
-          this.addHashToContainerSettings(view.container, data.hash)
+          addHashToContainerSettings(view.container, data.hash)
         })
       })
       .catch(() => {
@@ -73,18 +74,9 @@ class ContextMenu {
         container: container,
         storageType: 'rawdata',
         data: data.content,
-      }).then((container: Container) => {
-        this.addHashToContainerSettings(container, data.hash)
+      })?.then((container: Container) => {
+        addHashToContainerSettings(container, data.hash)
       })
-    })
-  }
-
-  addHashToContainerSettings(container: Container, hash: string) {
-    $e.run('document/elements/settings', {
-      container,
-      settings: {
-        theme_mananager_hash: hash,
-      },
     })
   }
 }

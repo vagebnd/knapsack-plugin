@@ -3,7 +3,8 @@ import '/@admin:css/tailwind.css'
 import { createApp } from 'vue'
 import App from './components/App.vue'
 import { registerComponents } from '/@admin:bootstrap/components'
-import { SkeletonApp } from '/@admin:types/elementor'
+import { Container, ElementData, SkeletonApp } from '/@admin:types/elementor'
+import { addHashToContainerSettings } from '/@admin:utils/elementor'
 
 class Application {
   constructor() {
@@ -41,9 +42,21 @@ class Application {
         if ((e.target as HTMLElement).closest('.elementor-add-skeleton-blocks-button')) {
           e.preventDefault()
           e.stopPropagation()
-          window.$skeletonApp.library.open()
+          window.$skeletonApp.library.open().then((data) => {
+            this.importElement(data)
+          })
         }
       })
+    })
+  }
+
+  importElement(data: ElementData) {
+    $e.run('document/ui/paste', {
+      container: elementor.getPreviewContainer(),
+      storageType: 'rawdata',
+      data: data.content,
+    })?.then((container: Container) => {
+      addHashToContainerSettings(container, data.hash)
     })
   }
 

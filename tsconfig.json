@@ -18,6 +18,7 @@
       "/@admin/*": ["resources/admin/*"],
       "/@admin:bootstrap/*": ["./resources/admin/assets/ts/bootstrap/*"],
       "/@admin:components/*": ["./resources/admin/assets/ts/components/*"],
+      "/@admin:data/*": ["./resources/admin/assets/ts/data/*"],
       "/@admin:css/*": ["./resources/admin/assets/css/*"],
       "/@admin:layouts/*": ["./resources/admin/assets/ts/layouts/*"],
       "/@admin:plugins/*": ["./resources/admin/assets/ts/plugins/*"],

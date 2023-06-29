@@ -1,6 +1,8 @@
 import { ElementData } from '/@admin:types/elementor'
 import { createClient } from './factory'
 
+type ReducedElementData = Omit<ElementData, 'hash'>
+
 const url = import.meta.env.VITE_THEME_MANAGER_API_URL
 const apiKey = import.meta.env.VITE_THEME_MANAGER_API_KEY
 const theme = import.meta.env.VITE_THEME_MANAGER_THEME_ID
@@ -16,14 +18,18 @@ client.interceptors.request.use((config) => {
   return config
 })
 
-export const viewElement = (ID: string) => {
-  return client.get(`theme-elements/${ID}`)
+export const getElements = () => {
+  return client.get('theme-elements')
 }
 
-export const createElement = (data: ElementData) => {
+export const viewElement = (hash: string) => {
+  return client.get(`theme-elements/${hash}`)
+}
+
+export const createElement = (data: ReducedElementData) => {
   return client.post('theme-elements/create', data)
 }
 
-export const updateElement = (ID: string, data: ElementData) => {
-  return client.post(`theme-elements/${ID}`, data)
+export const updateElement = (hash: string, data: ReducedElementData) => {
+  return client.post(`theme-elements/${hash}`, data)
 }

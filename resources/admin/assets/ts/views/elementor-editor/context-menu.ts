@@ -1,56 +1,50 @@
+import { toast } from 'vue-sonner'
+import { Container, ElementData } from '/@admin:types/elementor'
+
 class ContextMenu {
   private menuName = 'skeleton'
 
   constructor() {
     this.addMenuGroup()
-    this.addSaveButton()
-    this.addImportButton()
+    this.addMenuItems()
   }
 
   addMenuGroup() {
     elementor.hooks.addFilter('elements/context-menu/groups', (customGroups: any[], elementType: string) => {
-      customGroups.push({
-        name: this.menuName,
-        actions: [],
-      })
+      if (elementType === 'container') {
+        customGroups.push({
+          name: this.menuName,
+          actions: [],
+        })
+      }
 
       return customGroups
     })
   }
 
-  addSaveButton() {
-    ;['widget', 'section'].forEach((elType) => {
-      elementor.hooks.addFilter(`elements/${elType}/contextMenuGroups`, (groups: any[], view: any) => {
-        groups
-          .find((group: any) => group.name === this.menuName)
-          .actions.push({
+  addMenuItems() {
+    elementor.hooks.addFilter(`elements/container/contextMenuGroups`, (groups: any[], view: any) => {
+      const group = groups.find((group: any) => group.name === this.menuName)
+
+      group.actions = [
+        ...group.actions,
+        ...[
+          {
             name: 'save-element',
             icon: 'eicon-arrow-left',
-            title: `save ${elType}`,
-            isEnabled: () => true,
+            title: `save container`,
             callback: () => this.save(view),
-          })
-        return groups
-      })
-    })
-  }
-
-  addImportButton() {
-    ;['column', 'section'].forEach((elType) => {
-      elementor.hooks.addFilter(`elements/${elType}/contextMenuGroups`, (groups: any[], view: any) => {
-        const type = elType === 'column' ? 'widget' : 'section'
-
-        groups
-          .find((group: any) => group.name === this.menuName)
-          .actions.push({
+          },
+          {
             name: 'import-element',
             icon: 'eicon-arrow-right',
-            title: `import ${type}`,
-            isEnabled: () => true,
-            callback: () => this.importElement(view, type),
-          })
-        return groups
-      })
+            title: `import container`,
+            callback: () => this.importElement(view),
+          },
+        ],
+      ]
+
+      return groups
     })
   }
 
@@ -61,16 +55,37 @@ class ContextMenu {
 
     navigator.clipboard
       .readText()
-      .then(function (content) {
-        window.$skeletonApp.elementSaver.open(view.container, content)
+      .then((content) => {
+        window.$skeletonApp.elementSaver.open(view.container, content).then((data: ElementData) => {
+          this.addHashToContainerSettings(view.container, data.hash)
+        })
       })
-      .catch(function (err) {
-        // TODO:: handle error
+      .catch(() => {
+        toast.error('Navigator.clipboard does not work.')
       })
   }
 
-  importElement(view: any, type: string) {
-    console.log(view, type)
+  importElement(view: any) {
+    window.$skeletonApp.library.open().then((data) => {
+      const container = view.container
+
+      $e.run('document/ui/paste', {
+        container: container,
+        storageType: 'rawdata',
+        data: data.content,
+      }).then((container: Container) => {
+        this.addHashToContainerSettings(container, data.hash)
+      })
+    })
+  }
+
+  addHashToContainerSettings(container: Container, hash: string) {
+    $e.run('document/elements/settings', {
+      container,
+      settings: {
+        theme_mananager_hash: hash,
+      },
+    })
   }
 }
 

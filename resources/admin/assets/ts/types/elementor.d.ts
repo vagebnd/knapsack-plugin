@@ -1,17 +1,17 @@
 import { ComponentPublicInstance } from 'vue'
 
-export interface VueInstance extends ComponentPublicInstance {
+export interface SkeletonApp extends ComponentPublicInstance {
   library: {
-    open: () => void
+    open: () => Promise<ElementData>
   }
   elementSaver: {
-    open: (container: Container, content: string) => void
+    open: (container: Container, content: string) => Promise<ElementData>
   }
 }
 
 export type ElementData = {
+  hash: string
   title: string
-  external_id: string
   content: string
   type: string
 }
@@ -19,4 +19,7 @@ export type ElementData = {
 export type Container = {
   type: string
   id: string
+  settings: {
+    attributes: Record<string, any>
+  }
 }

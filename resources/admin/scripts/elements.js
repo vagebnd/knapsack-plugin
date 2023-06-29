@@ -14,7 +14,7 @@ const fetchData = async () => {
       },
     })
 
-    const data = response.data
+    const data = response.data.data
 
     // Create directory if it doesn't exist
     if (!fs.existsSync(dataDirectory)) {

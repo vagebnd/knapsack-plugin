@@ -2,8 +2,8 @@ import '/@admin:css/tailwind.css'
 
 import { createApp } from 'vue'
 import App from './components/App.vue'
-import { registerComponents } from '../../bootstrap/components'
-import { VueInstance } from '/@admin:types/elementor'
+import { registerComponents } from '/@admin:bootstrap/components'
+import { SkeletonApp } from '/@admin:types/elementor'
 
 class Application {
   constructor() {
@@ -20,7 +20,7 @@ class Application {
     const app = createApp(App)
     registerComponents(app)
 
-    window.$skeletonApp = app.mount(`#${element.id}`) as VueInstance
+    window.$skeletonApp = app.mount(`#${element.id}`) as SkeletonApp
   }
 
   addBlocksButton() {

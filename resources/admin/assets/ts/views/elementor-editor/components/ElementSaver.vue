@@ -18,30 +18,35 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { Container } from '/@admin:types/elementor'
 import { viewElement, updateElement, createElement } from '/@admin:utils/http/theme-manager'
 import { toast } from 'vue-sonner'
 import Dialog from './Dialog.vue'
 import { $t } from '/@admin:plugins/i18n'
 
+let resolver: (value: unknown) => void
+let rejector: (reason?: unknown) => void
+
 const isOpen = ref(false)
 const container = ref<Container>()
 const content = ref('')
-const isFetching = ref(true)
+const isFetching = ref(false)
 const isSubmitting = ref(false)
-const isCreating = ref(true)
 const elementTitle = ref('')
+const elementHash = ref<string | undefined>()
 
-let resolver: (value: unknown) => void
-let rejector: (reason?: unknown) => void
+const isCreating = computed(() => !elementHash.value)
 
 const open = (containerValue: Container, contentValue: string) => {
   content.value = contentValue
   container.value = containerValue
+  elementHash.value = containerValue.settings?.attributes?.theme_mananager_hash
   isOpen.value = true
 
-  fetchElementData()
+  if (!isCreating.value) {
+    fetchElementData()
+  }
 
   return new Promise((resolve, reject) => {
     resolver = resolve
@@ -54,10 +59,11 @@ const fetchElementData = () => {
     return rejector(new Error('Container is not defined'))
   }
 
-  viewElement(container.value.id)
+  isFetching.value = true
+
+  viewElement(elementHash.value as string)
     .then((response) => {
       elementTitle.value = response.data.title
-      isCreating.value = false
     })
     .finally(() => {
       isFetching.value = false
@@ -76,7 +82,6 @@ const submitForm = () => {
   const data = {
     title: elementTitle.value,
     content: content.value,
-    external_id: container.value.id,
     type: container.value.type,
   }
 
@@ -89,7 +94,7 @@ const submitForm = () => {
       .finally(finish)
   }
 
-  updateElement(container.value.id, data)
+  updateElement(elementHash.value as string, data)
     .then((response) => {
       toast.success($t('Element updated successfully.'))
       resolver(response.data)

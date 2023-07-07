@@ -1,41 +1,43 @@
 {
-    "name": "knapsack/plugin",
-    "description": "Knapsack WordPress starter theme",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Skeleton\\": "app/"
-        },
-        "files": [
-            "app/Support/helpers.php"
-        ]
+  "name": "knapsack/plugin",
+  "description": "Knapsack WordPress starter theme",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Skeleton\\": "app/"
     },
-    "authors": [
-        {
-            "name": "Gianluca Riggio",
-            "email": "luca@maximumawesome.nl"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../framework"
-        }
-    ],
-    "require": {
-        "php": "^7.4|^8.0",
-        "knapsack/framework": "dev-main",
-        "rakit/validation": "^1.4"
-    },
-    "require-dev": {
-        "phpstan/phpstan": "^1.10",
-        "szepeviktor/phpstan-wordpress": "^1.1",
-        "filp/whoops": "^2.15",
-        "symfony/var-dumper": "^5.4",
-        "friendsofphp/php-cs-fixer": "^3.16"
-    },
-    "scripts": {
-        "analyse": "vendor/bin/phpstan analyse --memory-limit=2G",
-        "fix": "vendor/bin/pint"
+    "files": [
+      "app/Support/helpers.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Gianluca Riggio",
+      "email": "luca@maximumawesome.nl"
     }
+  ],
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../framework"
+    }
+  ],
+  "require": {
+    "php": "^7.4|^8.0",
+    "knapsack/framework": "dev-main",
+    "rakit/validation": "^1.4",
+    "guzzlehttp/guzzle": "^7.7",
+    "ankitpokhrel/tus-php": "^2.3"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.10",
+    "szepeviktor/phpstan-wordpress": "^1.1",
+    "filp/whoops": "^2.15",
+    "symfony/var-dumper": "^5.4",
+    "friendsofphp/php-cs-fixer": "^3.16"
+  },
+  "scripts": {
+    "analyse": "vendor/bin/phpstan analyse --memory-limit=2G",
+    "fix": "vendor/bin/pint"
+  }
 }

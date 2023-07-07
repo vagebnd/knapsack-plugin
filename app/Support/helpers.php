@@ -3,112 +3,94 @@
 namespace Skeleton\Support;
 
 use Knapsack\Compass\Contracts\ViewContract;
+use Knapsack\Compass\Support\Env;
+use Knapsack\Compass\Support\Facades\Config;
 use Knapsack\Compass\Support\Vite;
 
-if (! function_exists('path')) {
-    function path($path = '')
-    {
-        return __DIR__ . '/../../' . $path;
+function app($abstract = null, array $parameters = [])
+{
+    if (is_null($abstract)) {
+        return Plugin::getInstance();
     }
+
+    return Plugin::getInstance()->make($abstract, $parameters);
 }
 
-if (! function_exists('app_path')) {
-    function app_path($path = '')
-    {
-        return path('app/' . $path);
-    }
+function app_path($path = '')
+{
+    return path('app/' . $path);
 }
 
-if (! function_exists('resource_path')) {
-    function resource_path($path = '')
-    {
-        return path('resources/' . $path);
-    }
+function asset_url($path = '')
+{
+    return resource_url('assets/' . $path);
 }
 
-if (! function_exists('storage_path')) {
-    function storage_path($path = '')
-    {
-        return path('storage/' . $path);
-    }
+function can($capability)
+{
+    return current_user_can($capability);
 }
 
-if (! function_exists('url')) {
-    function url($path = '')
-    {
-        return plugins_url($path, path('../'));
-    }
+function createMetaKey($key)
+{
+    return '_' . Config::get('app.name') . '_' . $key;
 }
 
-if (! function_exists('resource_url')) {
-    function resource_url($path = '')
-    {
-        return url('resources/' . $path);
-    }
+function env($key, $default = null)
+{
+    return app(Env::class)->get($key, $default);
 }
 
-if (! function_exists('asset_url')) {
-    function asset_url($path = '')
-    {
-        return resource_url('assets/' . $path);
-    }
+function http()
+{
+    return app(Http::class);
 }
 
-if (! function_exists('app')) {
-    function app($abstract = null, array $parameters = [])
-    {
-        if (is_null($abstract)) {
-            return Plugin::getInstance();
-        }
-
-        return Plugin::getInstance()->make($abstract, $parameters);
-    }
+function path($path = '')
+{
+    return __DIR__ . '/../../' . $path;
 }
 
-if (! function_exists('view')) {
-    function view(string $name, array $attributes = [])
-    {
-        echo app(ViewContract::class)->render($name, $attributes);
-    }
+function redirect($page)
+{
+    wp_redirect("admin.php?page={$page}");
+    exit;
 }
 
-if (! function_exists('can')) {
-    function can($capability)
-    {
-        return current_user_can($capability);
-    }
+function resource_path($path = '')
+{
+    return path('resources/' . $path);
 }
 
-if (! function_exists('vite')) {
-    function vite()
-    {
-        return new Vite('assets', Plugin::getInstance()->getContainer());
-    }
+function resource_url($path = '')
+{
+    return url('resources/' . $path);
 }
 
-if (! function_exists('redirect')) {
-    /**
-     * Redirect to a page in the admin panel.
-     *
-     * @param string $page
-     */
-    function redirect($page)
-    {
-        wp_redirect("admin.php?page={$page}");
-        exit;
-    }
+function storage_path($path = '')
+{
+    return path('storage/' . $path);
 }
 
-if (! function_exists('wp_log')) {
-    /**
-     * Redirect to a page in the admin panel.
-     *
-     */
-    function wp_log($value)
-    {
-        $file_path = path('wp.log');
-        $file_handle = fopen($file_path, 'a');
-        fwrite($file_handle, $value . PHP_EOL);
-        fclose($file_handle);
-    }
+function url($path = '')
+{
+    return plugins_url($path, path('../'));
+}
+
+function view(string $name, array $attributes = [])
+{
+    echo app(ViewContract::class)->render($name, $attributes);
+}
+
+function vite()
+{
+    return new Vite('assets', Plugin::getInstance()->getContainer());
+}
+
+function wp_log($value)
+{
+    $file_path = path('wp.log');
+    $file_handle = fopen($file_path, 'a');
+    fwrite($file_handle, $value . PHP_EOL);
+    fclose($file_handle);
 }

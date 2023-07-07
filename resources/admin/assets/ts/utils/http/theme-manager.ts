@@ -33,3 +33,15 @@ export const createElement = (data: ReducedElementData) => {
 export const updateElement = (hash: string, data: ReducedElementData) => {
   return client.post(`theme-elements/${hash}`, data)
 }
+
+export const getTemplates = () => {
+  return client.get('theme-templates')
+}
+
+export const createTemplate = () => {
+  return client.get('theme-templates/create')
+}
+
+export const updateTemplate = (hash: string) => {
+  return client.get(`theme-templates/${hash}`)
+}

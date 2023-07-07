@@ -1,7 +1,13 @@
-import { createApp } from 'vue'
+import { DefineComponent, createApp, defineComponent } from 'vue'
+import { registerComponents } from '/@admin/assets/ts/bootstrap/components'
 
-export default function mountVue(selector: string, options: Record<string, unknown> = {}) {
-  const app = createApp(options)
+export default function mountVue(selector: string, component: DefineComponent) {
+  if (!component) {
+    component = defineComponent({})
+  }
+
+  const app = createApp(component)
+  registerComponents(app)
   app.mount(selector)
   return app
 }

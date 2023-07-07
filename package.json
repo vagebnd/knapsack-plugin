@@ -51,6 +51,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.14",
     "@sipec/vue3-tags-input": "^3.0.4",
+    "@vueuse/core": "^10.2.1",
     "axios": "^1.4.0",
     "collect.js": "^4.36.1",
     "vue": "^3.3.4",

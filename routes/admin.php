@@ -5,7 +5,7 @@ use function Skeleton\Support\view;
 
 Route::adminPage('Skeleton', function ($page) {
     $page->get('/', function () {
-        view('admin.views.pages.test');
+        view('admin.views.pages.skeleton');
     });
 
     $page->get('export', function () {

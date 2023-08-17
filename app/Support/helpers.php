@@ -21,6 +21,11 @@ function app_path($path = '')
     return path('app/' . $path);
 }
 
+function upload_path($path)
+{
+    return trailingslashit(wp_upload_dir()['basedir']) . ltrim($path, '/');
+}
+
 function asset_url($path = '')
 {
     return resource_url('assets/' . $path);

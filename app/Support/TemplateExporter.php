@@ -137,7 +137,6 @@ class TemplateExporter
                 return [
                     'id' => $item->ID,
                     'title' => $item->post_title,
-                    'url' => $item->url,
                     'parent_id' => Arr::get($meta, '_menu_item_menu_item_parent'),
                     'postSlug' => get_post_field('post_name', Arr::get($meta, '_menu_item_object_id')),
                     'items' => [],
@@ -207,7 +206,6 @@ class TemplateExporter
                     'post_status',
                     'post_name',
                     'post_parent',
-                    'guid',
                     'menu_order',
                     'post_type',
                     'meta_input',

@@ -256,11 +256,15 @@ class TemplateExporter
     private function getPostMeta($postID)
     {
         return collect(get_post_meta($postID))
-            ->map(function ($meta) {
+            ->map(function ($meta, $key) {
                 $value = $meta[0];
 
                 if (is_serialized($value)) {
                     $value = unserialize($value);
+                }
+
+                if ($key === '_elementor_data') {
+                    $value = add_host_placeholder($value);
                 }
 
                 return $value;

@@ -82,6 +82,12 @@ function url($path = '')
     return plugins_url($path, path('../'));
 }
 
+function add_host_placeholder($value)
+{
+    // match http: followed by any number of non-colon characters followed by a colon followed by any number of digits
+    return preg_replace('/http:[^:]+:\d+/', '{{ host }}', $value);
+}
+
 function view(string $name, array $attributes = [])
 {
     echo app(ViewContract::class)->render($name, $attributes);

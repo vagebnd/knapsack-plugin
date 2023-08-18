@@ -2,6 +2,9 @@ import { toast } from 'vue-sonner'
 import { Container, ElementData } from '/@admin:types/elementor'
 import { addHashToContainerSettings } from '/@admin:utils/elementor'
 
+import { parseElement } from '/@admin:utils/http/wp'
+import { parse } from 'path'
+
 class ContextMenu {
   private menuName = 'skeleton'
 
@@ -70,12 +73,14 @@ class ContextMenu {
     window.$skeletonApp.library.open().then((data) => {
       const container = view.container
 
-      $e.run('document/ui/paste', {
-        container: container,
-        storageType: 'rawdata',
-        data: data.content,
-      })?.then((container: Container) => {
-        addHashToContainerSettings(container, data.hash)
+      parseElement(data.content).then((response) => {
+        $e.run('document/ui/paste', {
+          container: container,
+          storageType: 'rawdata',
+          data: response.data,
+        })?.then((container: Container) => {
+          addHashToContainerSettings(container, data.hash)
+        })
       })
     })
   }

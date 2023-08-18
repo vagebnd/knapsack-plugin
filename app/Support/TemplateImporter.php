@@ -23,6 +23,7 @@ class TemplateImporter
 
     public function import($path)
     {
+        $this->clean();
         $this->importAttachments($path);
         $this->importData($path);
     }
@@ -39,7 +40,6 @@ class TemplateImporter
         $terms = Arr::get($data, 'terms', []);
         $navigations = Arr::get($data, 'navigations', []);
 
-        $this->clean();
         $this->importTerms($terms);
         $this->importPosts($posts);
         $this->importNavigations($navigations);
@@ -47,6 +47,12 @@ class TemplateImporter
 
     private function clean()
     {
+        $imagePlaceholder = get_page_by_title('image-placeholder', OBJECT, 'attachment');
+
+        if ($imagePlaceholder) {
+            wp_delete_attachment($imagePlaceholder->ID, true);
+        }
+
         collect(get_theme_mods())
             ->each(function ($option) {
                 delete_option($option);
@@ -185,7 +191,7 @@ class TemplateImporter
             })
             ->pluck('guid', 'importTitle');
 
-        $data = preg_replace_callback('/http[^"]*\.[^"]*[^"\\\\]/', function ($matches) use ($attachments) {
+        $data = preg_replace_callback('/{{ host }}(.*?)(?=\\\")/', function ($matches) use ($attachments) {
             $url = $matches[0];
             $filename = basename($url);
             $filename = trim($filename, '\"\\');
@@ -196,10 +202,10 @@ class TemplateImporter
                 return $result;
             }
 
-            return $matches[0];
+            return $url;
         }, $data);
 
-        $data = preg_replace('#http:\\\/\\\/[^\\/]*#', get_site_url(), $data);
+        $data = str_replace('{{ host }}', get_site_url(), $data);
 
         return $data;
     }

@@ -92,14 +92,14 @@ const submitForm = () => {
         resolver(response.data)
       })
       .finally(finish)
+  } else {
+    updateElement(elementHash.value as string, data)
+      .then((response) => {
+        toast.success($t('Element updated successfully.'))
+        resolver(response.data)
+      })
+      .finally(finish)
   }
-
-  updateElement(elementHash.value as string, data)
-    .then((response) => {
-      toast.success($t('Element updated successfully.'))
-      resolver(response.data)
-    })
-    .finally(finish)
 
   isSubmitting.value = true
 }

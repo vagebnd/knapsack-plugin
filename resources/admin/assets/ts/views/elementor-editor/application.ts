@@ -5,6 +5,7 @@ import App from './components/App.vue'
 import { registerComponents } from '/@admin:bootstrap/components'
 import { Container, ElementData, SkeletonApp } from '/@admin:types/elementor'
 import { addHashToContainerSettings } from '/@admin:utils/elementor'
+import { parseElement } from '../../utils/http/wp'
 
 class Application {
   constructor() {
@@ -51,12 +52,14 @@ class Application {
   }
 
   importElement(data: ElementData) {
-    $e.run('document/ui/paste', {
-      container: elementor.getPreviewContainer(),
-      storageType: 'rawdata',
-      data: data.content,
-    })?.then((container: Container) => {
-      addHashToContainerSettings(container, data.hash)
+    parseElement(data.content).then((response) => {
+      $e.run('document/ui/paste', {
+        container: elementor.getPreviewContainer(),
+        storageType: 'rawdata',
+        data: response.data,
+      })?.then((container: Container) => {
+        addHashToContainerSettings(container, data.hash)
+      })
     })
   }
 

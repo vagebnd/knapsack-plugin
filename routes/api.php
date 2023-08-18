@@ -6,6 +6,7 @@ use Skeleton\Http\Controllers\Api\Pricelist\IndexController as PriceListIndexCon
 use Skeleton\Http\Controllers\Api\Pricelist\UpdateController as PriceListUpdateController;
 use Skeleton\Http\Controllers\Api\Pricelist\ViewController as PriceListViewController;
 use Skeleton\Http\Controllers\Api\TagsController;
+use Skeleton\Http\Controllers\Api\ThemeElements\ParseController;
 use Skeleton\Http\Controllers\Api\ThemeTemplates\CheckImportController;
 use Skeleton\Http\Controllers\Api\ThemeTemplates\ExportController;
 use Skeleton\Http\Controllers\Api\ThemeTemplates\ImportController;
@@ -31,4 +32,10 @@ Route::admin()
         Route::get('check-import', [CheckImportController::class, 'check']);
         Route::post('export', [ExportController::class, 'export']);
         Route::post('import', [ImportController::class, 'import']);
+    });
+
+Route::admin()
+    ->prefix('theme-elements')
+    ->group(function () {
+        Route::post('parse', [ParseController::class, 'parse']);
     });

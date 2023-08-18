@@ -14,4 +14,8 @@ export const importTemplate = (hash: string) => {
   return client.post('theme-templates/import', { hash })
 }
 
+export const parseElement = (data: string) => {
+  return client.post('theme-elements/parse', { data })
+}
+
 export default client

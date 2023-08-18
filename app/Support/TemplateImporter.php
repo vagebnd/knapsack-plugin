@@ -62,6 +62,15 @@ class TemplateImporter
         $posts->each(function ($post) {
             wp_delete_post($post->ID, true);
         });
+
+        // TODO:: remove this later on. Or perhaps not?
+        collect(get_terms([
+            'taxonomy' => ['nav_menu'],
+            'hide_empty' => false,
+        ]))
+        ->each(function ($term) {
+            wp_delete_term($term->term_id, $term->taxonomy);
+        });
     }
 
     private function importPosts($posts)
@@ -106,7 +115,7 @@ class TemplateImporter
                 if (term_exists($slug, 'nav_menu')) {
                     $term = get_term_by('slug', $slug, 'nav_menu');
                 } else {
-                    $term = wp_insert_term($name, 'nav_menu', [
+                    $term = (object) wp_insert_term($name, 'nav_menu', [
                         'slug' => $slug,
                     ]);
                 }
@@ -127,7 +136,6 @@ class TemplateImporter
 
                 $navItemPostID = wp_insert_post([
                     'post_title' => $item['title'],
-                    'guid' => $item['url'],
                     'post_type' => 'nav_menu_item',
                     'post_status' => 'publish',
                     'comment_status' => 'closed',

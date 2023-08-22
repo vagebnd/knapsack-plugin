@@ -3,7 +3,6 @@ import { Container, ElementData } from '/@admin:types/elementor'
 import { addHashToContainerSettings } from '/@admin:utils/elementor'
 
 import { parseElement } from '/@admin:utils/http/wp'
-import { parse } from 'path'
 
 class ContextMenu {
   private menuName = 'skeleton'

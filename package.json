@@ -54,6 +54,8 @@
     "@vueuse/core": "^10.2.1",
     "axios": "^1.4.0",
     "collect.js": "^4.36.1",
+    "html2canvas": "^1.4.1",
+    "tus-js-client": "^3.1.1",
     "vue": "^3.3.4",
     "vue-autocomplete-input-tag": "^2.0.1",
     "vue-i18n": "^9.2.2",

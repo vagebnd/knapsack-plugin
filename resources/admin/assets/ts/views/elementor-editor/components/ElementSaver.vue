@@ -1,6 +1,7 @@
 <template>
   <div>
     <Dialog :is-open="isOpen">
+      <button @click="close">close</button>
       <Loader v-if="isFetching" />
       <form @submit.prevent="submitForm" v-else>
         <fieldset>
@@ -24,6 +25,8 @@ import { viewElement, updateElement, createElement } from '/@admin:utils/http/th
 import { toast } from 'vue-sonner'
 import Dialog from './Dialog.vue'
 import { $t } from '/@admin:plugins/i18n'
+import Screenshot from '../utils/Screenshot'
+import tus from '/@admin:utils/tus'
 
 let resolver: (value: unknown) => void
 let rejector: (reason?: unknown) => void
@@ -54,6 +57,10 @@ const open = (containerValue: Container, contentValue: string) => {
   })
 }
 
+const close = () => {
+  isOpen.value = false
+}
+
 const fetchElementData = () => {
   if (!container.value) {
     return rejector(new Error('Container is not defined'))
@@ -70,7 +77,7 @@ const fetchElementData = () => {
     })
 }
 
-const submitForm = () => {
+const submitForm = async () => {
   if (!container.value) {
     return rejector(new Error('Container is not defined'))
   }
@@ -79,10 +86,24 @@ const submitForm = () => {
     return toast.error($t('Add a title.'))
   }
 
+  const screenshot = new Screenshot()
+  const blob = await screenshot.getBlob(container.value.view.el)
+
+  if (!blob) {
+    return toast.error($t('Error while creating the screenshot.'))
+  }
+
+  const upload = await tus.upload(blob, 'screenshot')
+
+  if (!upload) {
+    return toast.error($t('Error while uploading the screenshot.'))
+  }
+
   const data = {
     title: elementTitle.value,
-    content: content.value,
     type: container.value.type,
+    screenshotID: upload?.url?.split('/').pop(),
+    content: content.value,
   }
 
   if (isCreating.value) {

@@ -22,4 +22,7 @@ export type Container = {
   settings: {
     attributes: Record<string, any>
   }
+  view: {
+    el: HTMLElement
+  }
 }
